@@ -1,6 +1,6 @@
 site:
   name: Espacio Serendipia
-  site: 'https://astrowind.vercel.app'
+  site: 'https://serendipia.uy'
   base: '/'
   trailingSlash: false
 

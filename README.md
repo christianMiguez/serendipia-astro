@@ -51,7 +51,7 @@
 
 ## Demo
 
-📌 [https://astrowind.vercel.app/](https://astrowind.vercel.app/)
+📌 [https://serendipia.uy/](https://serendipia.uy/)
 
 <br>
 
