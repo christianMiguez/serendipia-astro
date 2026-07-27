@@ -12,6 +12,8 @@ import FAQs from '~/components/widgets/FAQs.astro';
 import Stats from '~/components/widgets/Stats.astro';
 import CallToAction from '~/components/widgets/CallToAction.astro';
 
+const webImage = '~/assets/favicons/favicon.ico';
+
 const metadata = {
   title: 'Espacio Serendipia — Multiespacio de bienestar en el Cerro, Montevideo',
   ignoreTitleTemplate: true,
@@ -121,7 +123,7 @@ const metadata = {
       },
     ]}
     image={{
-      src: '/src/assets/images/web.webp',
+      src: webImage,
       alt: 'Imagen del espacio',
     }}
   >
