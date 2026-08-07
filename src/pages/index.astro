@@ -1,389 +1,79 @@
 ---
+import { getCollection } from 'astro:content';
 import Layout from '~/layouts/PageLayout.astro';
+import { getPermalink } from '~/utils/permalinks';
+import { SITE, METADATA } from 'astrowind:config';
 
-import Hero from '~/components/widgets/Hero.astro';
-import Note from '~/components/widgets/Note.astro';
-import Features from '~/components/widgets/Features.astro';
-import Features2 from '~/components/widgets/Features2.astro';
-import Steps from '~/components/widgets/Steps.astro';
-import Content from '~/components/widgets/Content.astro';
-import BlogLatestPosts from '~/components/widgets/BlogLatestPosts.astro';
-import FAQs from '~/components/widgets/FAQs.astro';
-import Stats from '~/components/widgets/Stats.astro';
-import CallToAction from '~/components/widgets/CallToAction.astro';
+export const prerender = true;
 
-const webImage = '~/assets/images/web.webp';
+const postsRaw = await getCollection('post');
+const posts = postsRaw
+  .filter((p) => !p.data.draft)
+  .sort((a, b) => {
+    const da = a.data.publishDate ? a.data.publishDate.getTime() : 0;
+    const db = b.data.publishDate ? b.data.publishDate.getTime() : 0;
+    return db - da;
+  });
+
+const badgeTints = [
+  { bg: 'bg-salmon-soft', text: 'text-primary-strong' },
+  { bg: 'bg-sage-soft', text: 'text-secondary-strong' },
+  { bg: 'bg-celeste-soft', text: 'text-accent' },
+];
+
+const cleanTitle = (title: string) => title.split(/\s+\|\s+/)[0].trim();
 
 const metadata = {
-  title: 'Espacio Serendipia — Multiespacio de bienestar en el Cerro, Montevideo',
+  title: `${SITE.name} — Multiespacio de bienestar en el Cerro, Montevideo`,
   ignoreTitleTemplate: true,
+  description: METADATA?.description,
 };
 ---
 
 <Layout metadata={metadata}>
-  <!-- Hero Widget ******************* -->
+  <section class="px-4 sm:px-6 pt-16 md:pt-24 pb-8 md:pb-12">
+    <div class="max-w-3xl mx-auto text-center">
+      <h1 class="text-4xl md:text-5xl font-bold font-heading text-text-heading leading-tight mb-4">
+        {SITE.name}
+      </h1>
+      {METADATA?.description && <p class="text-lg md:text-xl text-muted leading-relaxed">{METADATA.description}</p>}
+    </div>
+  </section>
 
-  <Hero
-    actions={[
-      {
-        variant: 'primary',
-        text: 'Reservá tu turno',
-        href: 'https://github.com/arthelokyo/astrowind',
-        target: '_blank',
-        icon: 'tabler:download',
-      },
-      { text: 'Conocé más', href: '#features' },
-    ]}
-    image={{ src: '~/assets/images/hero-image.png', alt: 'Espacio Serendipia' }}
-  >
-    <Fragment slot="title">
-      Encontrá tu equilibrio <span class="hidden xl:inline">en el corazón del</span>
-      <span class="text-accent dark:text-white"> Cerro</span>, Montevideo
-    </Fragment>
-
-    <Fragment slot="subtitle">
-      <span class="hidden sm:inline">
-        <span class="font-semibold">Espacio Serendipia</span> es un multiespacio de bienestar integral en el barrio Cerro
-        de Montevideo.</span
-      >
-      <span class="block mb-1 sm:hidden font-bold text-blue-600">Espacio Serendipia: bienestar integral.</span>
-      Salud mental, terapias holísticas, talleres educativos y renta de consultorios por hora.
-    </Fragment>
-  </Hero>
-
-  <!-- Note Widget ******************* -->
-
-  <Note title="Nuestra filosofía:" description="Equilibrio entre cuerpo, mente y espíritu" />
-
-  <!-- Features Widget *************** -->
-
-  <Features
-    id="features"
-    tagline="Servicios"
-    title="Todo lo que ofrece Espacio Serendipia"
-    subtitle="Un multiespacio pensado para tu bienestar integral, en el corazón del barrio Cerro."
-    items={[
-      {
-        title: 'Psicoterapia y salud mental',
-        description:
-          'Equipo de profesionales de distintas corrientes psicológicas: psicoterapia individual, terapia de pareja y asesoramiento para tu bienestar emocional.',
-        icon: 'tabler:brand-tailwind',
-      },
-      {
-        title: 'Terapias holísticas',
-        description:
-          'Reiki, terapia floral, aromaterapia, meditación, quiropraxia y Barras de Access para equilibrar cuerpo, mente y espíritu.',
-        icon: 'tabler:components',
-      },
-      {
-        title: 'Talleres y educación',
-        description:
-          'Cursos y talleres pensados para que desarrolles nuevas habilidades y sigas creciendo, tanto a nivel personal como profesional.',
-        icon: 'tabler:list-check',
-      },
-      {
-        title: 'Yoga y bienestar físico',
-        description:
-          'Clases y espacios dedicados al movimiento consciente para cuidar tu cuerpo y liberar tensiones del día a día.',
-        icon: 'tabler:rocket',
-      },
-      {
-        title: 'Flores de Bach y Bio Green',
-        description: 'Productos y terapias naturales que acompañan procesos de sanación emocional y física.',
-        icon: 'tabler:arrows-right-left',
-      },
-      {
-        title: 'Renta de consultorios por hora',
-        description:
-          'Reservá tu consultorio fácilmente desde nuestra app y sumate como profesional a nuestra comunidad de bienestar.',
-        icon: 'tabler:bulb',
-      },
-    ]}
-  />
-
-  <!-- Content Widget **************** -->
-
-  <Content
-    isReversed
-    tagline="Nuestro espacio"
-    title="Un lugar pensado para tu bienestar"
-    items={[
-      {
-        title: 'Ubicados en el barrio Cerro',
-        description: 'Un multiespacio accesible, cálido y pensado para toda la comunidad de Montevideo.',
-      },
-      {
-        title: 'Profesionales de distintas disciplinas',
-        description:
-          'Psicólogos, terapeutas, instructores de yoga y especialistas en terapias alternativas trabajando bajo un mismo techo.',
-      },
-      {
-        title: 'Ambiente cuidado y acogedor',
-        description: 'Espacios diseñados para que te sientas en calma desde el momento en que llegás.',
-      },
-    ]}
-    image={{
-      src: webImage,
-      alt: 'Imagen del espacio',
-    }}
-  >
-    <Fragment slot="content">
-      <h3 class="text-2xl font-bold tracking-tight dark:text-white sm:text-3xl mb-2">Construido para acompañarte</h3>
-      Sumate a una comunidad que prioriza tu bienestar integral
-    </Fragment>
-
-    <Fragment slot="bg">
-      <div class="absolute inset-0 bg-blue-50 dark:bg-transparent"></div>
-    </Fragment>
-  </Content>
-
-  <!-- Content Widget **************** -->
-
-  <Content
-    isAfterContent
-    items={[
-      {
-        title: 'Terapias personalizadas',
-        description: `Cada persona es distinta, por eso adaptamos cada sesión y taller a tus necesidades particulares.`,
-      },
-      {
-        title: 'Múltiples propuestas de bienestar',
-        description: 'Desde psicoterapia hasta reiki, elegí el enfoque que mejor se adapte a tu momento de vida.',
-      },
-      {
-        title: 'Espacio accesible para todos',
-        description:
-          'Consultorios y salas pensadas para recibirte con comodidad, cualquiera sea el servicio que elijas.',
-      },
-      {
-        title: 'Comunidad y acompañamiento',
-        description:
-          'Sumate a talleres y actividades grupales que fortalecen los vínculos y el crecimiento compartido.',
-      },
-    ]}
-    image={{
-      src: 'https://images.unsplash.com/photo-1600132806370-bf17e65e942f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2194&q=80',
-      alt: 'Imagen de bienestar',
-    }}
-  >
-    <Fragment slot="content">Un espacio que realmente te representa.</Fragment>
-
-    <Fragment slot="bg">
-      <div class="absolute inset-0 bg-blue-50 dark:bg-transparent"></div>
-    </Fragment>
-  </Content>
-
-  <!-- Content Widget **************** -->
-
-  <Content
-    isReversed
-    isAfterContent
-    items={[
-      {
-        title: 'Bienestar en cada visita',
-        description: 'Salas cuidadas, horarios flexibles y un equipo dispuesto a acompañarte en cada etapa.',
-      },
-      {
-        title: 'Actualización constante',
-        description: 'Sumamos nuevas propuestas y profesionales para seguir cubriendo tus necesidades de bienestar.',
-      },
-      {
-        title: 'Tiempo bien invertido',
-        description: 'Reservá tu turno o consultorio en minutos desde nuestra app y aprovechá al máximo tu visita.',
-      },
-      {
-        title: 'Comunidad de profesionales',
-        description: `Formá parte de una red de terapeutas y educadores que comparten espacio y valores en Espacio Serendipia.`,
-      },
-    ]}
-    image={{
-      src: 'https://images.unsplash.com/photo-1611462985358-60d3498e0364?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80',
-      alt: 'Imagen de comunidad',
-    }}
-  >
-    <Fragment slot="content">Pensado para tu crecimiento y bienestar.</Fragment>
-
-    <Fragment slot="bg">
-      <div class="absolute inset-0 bg-blue-50 dark:bg-transparent"></div>
-    </Fragment>
-  </Content>
-
-  <!-- Steps Widget ****************** -->
-
-  <Steps
-    title="Reservá tu turno o consultorio en simples pasos"
-    items={[
-      {
-        title: 'Paso 1: <span class="font-medium">Elegí el servicio</span>',
-        description:
-          'Psicoterapia, yoga, terapias holísticas o renta de consultorio: elegí lo que necesitás desde nuestra app.',
-        icon: 'tabler:package',
-      },
-      {
-        title: 'Paso 2: <span class="font-medium">Reservá tu turno</span>',
-        description: 'Seleccioná el día y el horario que mejor se adapte a tu agenda, de forma simple y rápida.',
-        icon: 'tabler:letter-case',
-      },
-      {
-        title: 'Paso 3: <span class="font-medium">Viví la experiencia</span>',
-        description: 'Acercate a Espacio Serendipia y disfrutá de un espacio pensado para tu bienestar integral.',
-        icon: 'tabler:paint',
-      },
-      {
-        title: '¡Listo!',
-        icon: 'tabler:check',
-      },
-    ]}
-    image={{
-      src: 'https://images.unsplash.com/photo-1616198814651-e71f960c3180?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=987&q=80',
-      alt: 'Imagen de pasos',
-    }}
-  />
-
-  <!-- Features2 Widget ************** -->
-
-  <Features2
-    title="Nuestras áreas de trabajo"
-    subtitle="Un multiespacio con propuestas para cada aspecto de tu bienestar"
-    tagline="Áreas"
-    items={[
-      {
-        title: 'Salud mental',
-        description:
-          'Psicoterapia individual, terapia de pareja y asesoramiento desde distintas corrientes psicológicas.',
-        icon: 'flat-color-icons:template',
-      },
-      {
-        title: 'Terapias holísticas',
-        description: 'Reiki, terapia floral, aromaterapia y meditación para equilibrar cuerpo, mente y espíritu.',
-        icon: 'flat-color-icons:gallery',
-      },
-      {
-        title: 'Yoga',
-        description: 'Clases de yoga para todos los niveles, pensadas para cuidar tu cuerpo y calmar tu mente.',
-        icon: 'flat-color-icons:approval',
-      },
-      {
-        title: 'Quiropraxia y Barras de Access',
-        description: 'Terapias corporales y energéticas para liberar tensiones y recuperar el equilibrio.',
-        icon: 'flat-color-icons:document',
-      },
-      {
-        title: 'Talleres educativos',
-        description: 'Cursos y espacios de aprendizaje para seguir creciendo personal y profesionalmente.',
-        icon: 'flat-color-icons:advertising',
-      },
-      {
-        title: 'Flores de Bach',
-        description: 'Terapia floral personalizada para acompañar procesos emocionales.',
-        icon: 'flat-color-icons:currency-exchange',
-      },
-      {
-        title: 'Bio Green',
-        description: 'Productos y propuestas naturales para complementar tu bienestar diario.',
-        icon: 'flat-color-icons:voice-presentation',
-      },
-      {
-        title: 'Renta de consultorios',
-        description:
-          'Reservá un consultorio por hora a través de nuestra app, ideal para profesionales de la salud y el bienestar.',
-        icon: 'flat-color-icons:business-contact',
-      },
-      {
-        title: 'Comunidad de profesionales',
-        description: 'Un espacio compartido por terapeutas, educadores e instructores comprometidos con tu bienestar.',
-        icon: 'flat-color-icons:database',
-      },
-    ]}
-  >
-    <Fragment slot="bg">
-      <div class="absolute inset-0 bg-blue-50 dark:bg-transparent"></div>
-    </Fragment>
-  </Features2>
-
-  <!-- HighlightedPosts Widget ******* -->
-
-  <BlogLatestPosts
-    title="Novedades de Espacio Serendipia"
-    information={`Acá vas a encontrar novedades sobre nuestros talleres, terapias y actividades.
-                        Sumate a nuestra comunidad y enterate de las últimas propuestas de bienestar
-                        en el barrio Cerro de Montevideo.
-                `}
-  />
-
-  <!-- FAQs Widget ******************* -->
-
-  <FAQs
-    title="Preguntas frecuentes"
-    subtitle="Encontrá acá las respuestas a las consultas más habituales sobre nuestros servicios en Espacio Serendipia."
-    tagline="Preguntas"
-    classes={{ container: 'max-w-6xl' }}
-    items={[
-      {
-        title: '¿Qué es Espacio Serendipia?',
-        description:
-          'Somos un multiespacio de bienestar integral ubicado en el barrio Cerro de Montevideo, donde ofrecemos servicios de salud mental, terapias holísticas y talleres educativos.',
-      },
-      {
-        title: '¿Cómo reservo un turno o consultorio?',
-        description:
-          'Podés reservar fácilmente a través de nuestra app, eligiendo el servicio, el profesional y el horario que mejor se adapte a tus necesidades.',
-      },
-      {
-        title: '¿Qué terapias holísticas ofrecen?',
-        description:
-          'Contamos con reiki, terapia floral (Flores de Bach), aromaterapia, meditación, quiropraxia y Barras de Access, entre otras propuestas.',
-      },
-      {
-        title: '¿Puedo alquilar un consultorio si soy profesional independiente?',
-        description:
-          'Sí, ofrecemos renta de consultorios por hora para profesionales de la salud y el bienestar que quieran atender en nuestro espacio.',
-      },
-      {
-        title: '¿Qué tipo de talleres dictan?',
-        description:
-          'Organizamos talleres y cursos sobre técnicas de aprendizaje, desarrollo personal y bienestar, pensados para todas las edades.',
-      },
-      {
-        title: '¿Dónde están ubicados?',
-        description:
-          'Estamos en el corazón del barrio Cerro de Montevideo, en un espacio pensado para recibirte con calidez.',
-      },
-    ]}
-  />
-
-  <!-- Stats Widget ****************** -->
-
-  <Stats
-    stats={[
-      { title: 'Pacientes atendidos', amount: '132K' },
-      { title: 'Talleres realizados', amount: '24.8K' },
-      { title: 'Profesionales asociados', amount: '10.3K' },
-      { title: 'Personas en nuestra comunidad', amount: '48.4K' },
-    ]}
-  />
-
-  <!-- CallToAction Widget *********** -->
-
-  <CallToAction
-    actions={[
-      {
-        variant: 'primary',
-        text: 'Reservá tu turno',
-        href: 'https://github.com/arthelokyo/astrowind',
-        target: '_blank',
-        icon: 'tabler:download',
-      },
-    ]}
-  >
-    <Fragment slot="title">
-      Tu bienestar,&nbsp;+&nbsp;<br class="block sm:hidden" /><span class="sm:whitespace-nowrap">nuestra prioridad</span
-      >
-    </Fragment>
-
-    <Fragment slot="subtitle">
-      Descubrí todo lo que Espacio Serendipia tiene para ofrecerte. <br class="hidden md:inline" />¡Te esperamos en el
-      Cerro!
-    </Fragment>
-  </CallToAction>
+  <section class="px-4 sm:px-6 pb-16 md:pb-24">
+    <div class="max-w-7xl mx-auto">
+      <ul class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+        {
+          posts.map((post, i) => {
+            const tint = badgeTints[i % badgeTints.length];
+            const link = getPermalink(post.id, 'post');
+            const title = cleanTitle(post.data.title);
+            const category = post.data.category || 'Servicios';
+            return (
+              <li>
+                <a
+                  href={link}
+                  class={`block h-full bg-surface rounded-xl shadow-sm p-6 md:p-7 hover:shadow-md transition duration-200 ease-in`}
+                >
+                  <span
+                    class={`inline-block text-xs font-semibold uppercase tracking-wide rounded-full px-3 py-1 mb-4 ${tint.bg} ${tint.text}`}
+                  >
+                    {category}
+                  </span>
+                  <h2 class="text-lg font-bold font-heading text-text-heading leading-snug mb-3">{title}</h2>
+                  {post.data.excerpt && <p class="text-sm text-muted leading-relaxed">{post.data.excerpt}</p>}
+                  <span class="mt-5 inline-flex items-center text-primary-strong font-semibold text-sm group-hover:text-text-heading transition">
+                    Conocé más
+                    <span class="ml-1" aria-hidden="true">
+                      →
+                    </span>
+                  </span>
+                </a>
+              </li>
+            );
+          })
+        }
+      </ul>
+    </div>
+  </section>
 </Layout>
