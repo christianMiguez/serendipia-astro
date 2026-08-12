@@ -1,5 +1,6 @@
 ---
 import { getCollection } from 'astro:content';
+import { Icon } from 'astro-icon/components';
 import Layout from '~/layouts/PageLayout.astro';
 import { getPermalink } from '~/utils/permalinks';
 import { SITE, METADATA } from 'astrowind:config';
@@ -23,6 +24,33 @@ const badgeTints = [
 
 const cleanTitle = (title: string) => title.split(/\s+\|\s+/)[0].trim();
 
+const reservarUrl =
+  'https://wa.me/59899419419?text=Hola%2C+quisiera+consultar+por+el+alquiler+de+un+consultorio+en+Espacio+Serendipia.+%C2%BFMe+podr%C3%ADan+brindar+m%C3%A1s+informaci%C3%B3n%3F&utm_source=chatgpt.com';
+
+const features = [
+  {
+    icon: 'tabler:brain',
+    bg: 'bg-celeste-soft',
+    tint: 'text-accent',
+    title: 'Terapia psicológica',
+    text: 'Acompañamiento profesional para tu salud mental.',
+  },
+  {
+    icon: 'tabler:home',
+    bg: 'bg-salmon-soft',
+    tint: 'text-primary-strong',
+    title: 'Consultorios por hora',
+    text: 'Espacios cálidos y equipados para profesionales.',
+  },
+  {
+    icon: 'tabler:flower',
+    bg: 'bg-sage-soft',
+    tint: 'text-secondary-strong',
+    title: 'Terapias alternativas',
+    text: 'Yoga, terapia floral, aromaterapia y más.',
+  },
+];
+
 const metadata = {
   title: `${SITE.name} — Multiespacio de bienestar en el Cerro, Montevideo`,
   ignoreTitleTemplate: true,
@@ -31,17 +59,78 @@ const metadata = {
 ---
 
 <Layout metadata={metadata}>
-  <section class="px-4 sm:px-6 pt-16 md:pt-24 pb-8 md:pb-12">
-    <div class="max-w-3xl mx-auto text-center">
-      <h1 class="text-4xl md:text-5xl font-bold font-heading text-text-heading leading-tight mb-4">
-        {SITE.name}
-      </h1>
-      {METADATA?.description && <p class="text-lg md:text-xl text-muted leading-relaxed">{METADATA.description}</p>}
+  <section class="relative md:-mt-[95px] overflow-hidden bg-page not-prose">
+    <img
+      src="/bg.webp"
+      alt="Interior de nuestro espacio de bienestar en el Cerro de Montevideo"
+      class="absolute inset-y-0 right-0 h-full w-full object-cover md:w-[80%]"
+    />
+    <div
+      class="absolute inset-0 bg-gradient-to-r from-white via-white/85 via-35% to-transparent to-75% max-md:bg-gradient-to-b max-md:via-white/75"
+      aria-hidden="true"
+    ></div>
+
+    <div class="relative max-w-7xl mx-auto px-4 sm:px-6">
+      <div class="pt-0 md:pt-[76px]" aria-hidden="true"></div>
+      <div class="py-12 md:py-20">
+        <div class="max-w-2xl">
+          <h1 class="text-3xl md:text-4xl font-bold font-heading text-text-heading leading-tight mb-6">
+            Espacio de bienestar Integral
+          </h1>
+          <p class="text-muted leading-relaxed md:max-w-lg mb-8">
+            En el Cerro de Montevideo, te acompañamos con <strong>terapia psicológica</strong> y terapias alternativas para tu
+            bienestar integral. También alquilamos <strong>consultorios por hora</strong> para profesionales de la salud.
+          </p>
+
+          <div class="flex flex-wrap items-center gap-4 mb-12">
+            <a href="#servicios" class="btn-primary">Conocé nuestros servicios</a>
+            <a
+              href={reservarUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="inline-flex items-center gap-2 rounded-full border border-primary-strong text-primary-strong font-semibold text-base leading-snug py-3.5 px-6 md:px-8 transition ease-in duration-200 hover:bg-salmon-soft"
+            >
+              Reservar consultorio
+              <span aria-hidden="true">→</span>
+            </a>
+          </div>
+
+          <ul class="grid gap-6 sm:grid-cols-3 sm:gap-4">
+            {
+              features.map((feature) => (
+                <li class="flex items-start gap-3">
+                  <span
+                    class:list={[
+                      'flex-none w-12 h-12 rounded-full flex items-center justify-center',
+                      feature.bg,
+                      feature.tint,
+                    ]}
+                  >
+                    <Icon name={feature.icon} class="w-6 h-6" />
+                  </span>
+                  <span>
+                    <span class="block font-bold font-heading text-text-heading text-sm md:text-base">
+                      {feature.title}
+                    </span>
+                    <span class="block text-xs md:text-sm text-muted leading-snug">{feature.text}</span>
+                  </span>
+                </li>
+              ))
+            }
+          </ul>
+        </div>
+      </div>
     </div>
   </section>
 
-  <section class="px-4 sm:px-6 pb-16 md:pb-24">
+  <section id="servicios" class="px-4 sm:px-6 py-6 md:py-10">
     <div class="max-w-7xl mx-auto">
+      <h3 class="text-2xl font-bold font-heading text-text-heading leading-tight mb-6 text-center">
+        Servicios
+      </h3>
+      <p class="text-muted leading-relaxed text-center mb-8">
+        Descubrí nuestros servicios y cómo podemos ayudarte a crecer, sanar y compartir.
+      </p>
       <ul class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
         {
           posts.map((post, i) => {

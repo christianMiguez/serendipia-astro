@@ -32,7 +32,7 @@ export const headerData = {
         },
         {
           text: 'Reservar Consultorio',
-          href: getPermalink('/consultorios/reservar'),
+          href: 'https://wa.me/59899419419?text=Hola%2C+quisiera+consultar+por+el+alquiler+de+un+consultorio+en+Espacio+Serendipia.+%C2%BFMe+podr%C3%ADan+brindar+m%C3%A1s+informaci%C3%B3n%3F&utm_source=chatgpt.com',
         },
       ],
     },
@@ -45,7 +45,7 @@ export const headerData = {
       href: getPermalink('/contacto'),
     },
   ],
-  actions: [{ text: 'Reservar Consultorio', href: getPermalink('/consultorios/reservar') }],
+  actions: [{ text: 'Reservar Consultorio', href: 'https://wa.me/59899419419?text=Hola%2C+quisiera+consultar+por+el+alquiler+de+un+consultorio+en+Espacio+Serendipia.+%C2%BFMe+podr%C3%ADan+brindar+m%C3%A1s+informaci%C3%B3n%3F&utm_source=chatgpt.com' }],
 };
 
 export const footerData = {
@@ -64,7 +64,7 @@ export const footerData = {
       title: 'Consultorios',
       links: [
         { text: 'Alquiler por Hora', href: getPermalink('/consultorios') },
-        { text: 'Reservar desde la App', href: getPermalink('/consultorios/reservar') },
+        { text: 'Reservar desde la App', href: 'https://wa.me/59899419419?text=Hola%2C+quisiera+consultar+por+el+alquiler+de+un+consultorio+en+Espacio+Serendipia.+%C2%BFMe+podr%C3%ADan+brindar+m%C3%A1s+informaci%C3%B3n%3F&utm_source=chatgpt.com' },
         { text: 'Para Profesionales', href: getPermalink('/profesionales') },
       ],
     },
