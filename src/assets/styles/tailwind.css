@@ -71,43 +71,57 @@
 }
 
 @utility btn {
-  @apply inline-flex items-center justify-center rounded-full border border-border bg-surface font-semibold text-center text-base text-page leading-snug transition py-3.5 px-6 md:px-8 ease-in duration-200 cursor-pointer shadow-sm hover:border-primary hover:text-text-heading focus:ring-2 focus:ring-accent focus:ring-offset-2 focus:ring-offset-surface;
+  @apply inline-flex items-center justify-center rounded-full bg-surface font-semibold text-center text-base text-page leading-snug transition py-3.5 px-6 md:px-8 ease-out duration-150 cursor-pointer hover:text-text-heading focus:ring-2 focus:ring-accent focus:ring-offset-2 focus:ring-offset-surface;
+  will-change: transform;
 }
 
 @utility btn-primary {
-  @apply btn border-transparent text-white shadow-none hover:border-transparent hover:text-white;
-  background-image: linear-gradient(
-    180deg,
-    var(--aw-color-logo-blue) 0%,
-    var(--aw-color-logo-teal) 55%,
-    var(--aw-color-logo-green) 100%
-  );
+  @apply btn border-transparent shadow-none hover:border-transparent;
+  color: rgb(242 243 243);
+  background-image:
+    linear-gradient(180deg, rgb(255 248 235 / 0.18) 0%, rgb(255 248 235 / 0) 40%),
+    linear-gradient(
+      180deg,
+      color-mix(in srgb, var(--aw-color-logo-blue) 65%, var(--aw-color-surface)) 0%,
+      var(--aw-color-logo-teal) 50%,
+      color-mix(in srgb, var(--aw-color-logo-green) 70%, var(--aw-color-surface)) 100%
+    );
+  text-shadow: 0 1px 1px rgb(20 60 45 / 0.2);
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / 0.4),
+    inset 0 -10px 16px rgb(40 90 70 / 0.16);
+
+  &:hover {
+    color: rgb(242 243 243);
+    transform: scale(1.015);
+    filter: saturate(1.12) brightness(1.06);
+  }
 }
 
 @utility btn-secondary {
-  @apply btn;
-  background-image: linear-gradient(
-    180deg,
-    var(--aw-color-celeste-soft) 0%,
-    var(--aw-color-cream) 45%,
-    var(--aw-color-sage-soft) 100%
-  );
-  box-shadow:
-    inset 0 1px 0 rgb(255 255 255 / 0.9),
-    inset 0 -10px 16px rgb(120 160 130 / 0.12),
-    0 2px 6px rgb(120 150 140 / 0.18);
+  @apply btn border-transparent text-text-heading shadow-none;
+  background-image: linear-gradient(180deg, var(--aw-color-surface) 0%, var(--aw-color-celeste-soft) 100%);
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.7);
 
   &:hover {
-    filter: brightness(1.02) saturate(1.05);
-    box-shadow:
-      inset 0 1px 0 rgb(255 255 255 / 0.9),
-      inset 0 -10px 16px rgb(120 160 130 / 0.14),
-      0 4px 12px rgb(120 150 140 / 0.25);
+    transform: scale(1.015);
+    filter: saturate(1.12) brightness(1.06);
   }
 }
 
 @utility btn-tertiary {
-  @apply btn border-transparent bg-transparent shadow-none text-muted hover:text-text-heading hover:bg-surface;
+  @apply btn border-transparent shadow-none;
+  color: rgb(57 61 61);
+  background-image: linear-gradient(180deg, var(--aw-color-salmon-soft) 0%, var(--aw-color-beige-soft) 100%);
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / 0.8),
+    inset 0 -6px 12px rgb(170 140 100 / 0.12);
+
+  &:hover {
+    color: rgb(57 61 61);
+    transform: scale(1.015);
+    filter: saturate(1.12) brightness(1.06);
+  }
 }
 
 #header.scroll > div:first-child {

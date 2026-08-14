@@ -27,11 +27,11 @@ export const headerData = {
       text: 'Consultorios',
       links: [
         {
-          text: 'Alquiler de Consultorios',
+          text: 'Ver consultorios',
           href: getPermalink('/consultorios'),
         },
         {
-          text: 'Reservar Consultorio',
+          text: 'Reservar',
           href: 'https://wa.me/59899419419?text=Hola%2C+quisiera+consultar+por+el+alquiler+de+un+consultorio+en+Espacio+Serendipia.+%C2%BFMe+podr%C3%ADan+brindar+m%C3%A1s+informaci%C3%B3n%3F&utm_source=chatgpt.com',
         },
       ],
@@ -40,12 +40,17 @@ export const headerData = {
       text: 'Profesionales',
       href: getPermalink('/profesionales'),
     },
+    
+  ],
+  actions: [
     {
-      text: 'Contacto',
-      href: getPermalink('/contacto'),
+      text: 'CONTACTAR',
+      variant: 'secondary',
+      target: '_blank',
+      href: 'https://wa.me/59899419419?text=Me+contacto+desde+la+web%3A+',
+      icon: 'tabler:arrow-right'
     },
   ],
-  actions: [{ text: 'Reservar Consultorio', href: 'https://wa.me/59899419419?text=Hola%2C+quisiera+consultar+por+el+alquiler+de+un+consultorio+en+Espacio+Serendipia.+%C2%BFMe+podr%C3%ADan+brindar+m%C3%A1s+informaci%C3%B3n%3F&utm_source=chatgpt.com' }],
 };
 
 export const footerData = {
@@ -64,7 +69,10 @@ export const footerData = {
       title: 'Consultorios',
       links: [
         { text: 'Alquiler por Hora', href: getPermalink('/consultorios') },
-        { text: 'Reservar desde la App', href: 'https://wa.me/59899419419?text=Hola%2C+quisiera+consultar+por+el+alquiler+de+un+consultorio+en+Espacio+Serendipia.+%C2%BFMe+podr%C3%ADan+brindar+m%C3%A1s+informaci%C3%B3n%3F&utm_source=chatgpt.com' },
+        {
+          text: 'Reservar desde la App',
+          href: 'https://wa.me/59899419419?text=Hola%2C+quisiera+consultar+por+el+alquiler+de+un+consultorio+en+Espacio+Serendipia.+%C2%BFMe+podr%C3%ADan+brindar+m%C3%A1s+informaci%C3%B3n%3F&utm_source=chatgpt.com',
+        },
         { text: 'Para Profesionales', href: getPermalink('/profesionales') },
       ],
     },
