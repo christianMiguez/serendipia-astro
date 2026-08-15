@@ -4,6 +4,7 @@ import { Icon } from 'astro-icon/components';
 import Image from '~/components/common/Image.astro';
 import PostTags from '~/components/blog/Tags.astro';
 import SocialShare from '~/components/common/SocialShare.astro';
+import MailchimpForm from '~/components/widgets/MailchimpForm.astro';
 
 import { getPermalink } from '~/utils/permalinks';
 import { getFormattedDate } from '~/utils/utils';
@@ -16,14 +17,52 @@ export interface Props {
 }
 
 const { post, url } = Astro.props;
+
+type LeadFormConfig = {
+  u: string;
+  id: string;
+  fId: string;
+  tags: number;
+  title: string;
+  description?: string;
+};
+
+const LEAD_FORMS: Record<string, LeadFormConfig> = {
+  yoga: {
+    u: 'd8e9fa69f115dd80f19ef36e0',
+    id: 'b574becbb8',
+    fId: '0056aee6f0',
+    tags: 3022061,
+    title: 'Me interesa',
+    description: 'Te avisamos cuando abramos la próxima inscripción a las clases de yoga.',
+  },
+  'constelaciones-familiares': {
+    u: 'd8e9fa69f115dd80f19ef36e0',
+    id: 'b574becbb8',
+    fId: '0055aee6f0',
+    tags: 3022062,
+    title: 'ME INTERESA',
+    description: 'Te avisamos cuando anunciemos la próxima edición de Constelaciones Familiares.',
+  },
+};
+
+const leadForm = LEAD_FORMS[post.id] ?? null;
+const hasLeadForm = !!leadForm;
 ---
 
 <section class="py-8 sm:py-16 lg:py-20 mx-auto">
-  <article>
+  <article
+    class:list={[
+      hasLeadForm && 'max-w-6xl mx-auto lg:grid lg:grid-cols-[minmax(0,1fr)_300px] lg:gap-10 lg:items-start',
+    ]}
+  >
     <header
-      class={post.image
-        ? 'intersect-once intersect-quarter motion-safe:md:opacity-0 motion-safe:md:intersect:animate-fade'
-        : 'intersect-once intersect-quarter motion-safe:md:opacity-0 motion-safe:md:intersect:animate-fade'}
+      class:list={[
+        post.image
+          ? 'intersect-once intersect-quarter motion-safe:md:opacity-0 motion-safe:md:intersect:animate-fade'
+          : 'intersect-once intersect-quarter motion-safe:md:opacity-0 motion-safe:md:intersect:animate-fade',
+        hasLeadForm && 'lg:col-start-1 lg:row-start-1',
+      ]}
     >
       <div class="flex justify-between flex-col sm:flex-row max-w-3xl mx-auto mt-0 mb-2 px-4 sm:px-6 sm:items-center">
         <p>
@@ -89,12 +128,29 @@ const { post, url } = Astro.props;
         )
       }
     </header>
+
+    {
+      hasLeadForm && leadForm && (
+        <aside class="px-4 sm:px-6 lg:px-0 lg:col-start-2 lg:row-start-1 lg:row-span-3 lg:self-start lg:sticky lg:top-24">
+          <MailchimpForm {...leadForm} />
+        </aside>
+      )
+    }
+
     <div
-      class="mx-auto px-6 sm:px-6 max-w-3xl prose prose-md lg:prose-xl prose-headings:font-heading prose-headings:leading-tighter prose-headings:tracking-tighter prose-headings:font-bold prose-headings:text-text-heading prose-a:text-primary-strong prose-a:no-underline hover:prose-a:underline prose-img:rounded-lg prose-img:shadow-md mt-8 prose-headings:scroll-mt-[80px] prose-li:my-0"
+      class:list={[
+        'mx-auto px-6 sm:px-6 max-w-3xl prose prose-md lg:prose-xl prose-headings:font-heading prose-headings:leading-tighter prose-headings:tracking-tighter prose-headings:font-bold prose-headings:text-text-heading prose-a:text-primary-strong prose-a:no-underline hover:prose-a:underline prose-img:rounded-lg prose-img:shadow-md mt-8 prose-headings:scroll-mt-[80px] prose-li:my-0',
+        hasLeadForm && 'lg:col-start-1 lg:row-start-2',
+      ]}
     >
       <slot />
     </div>
-    <div class="mx-auto px-6 sm:px-6 max-w-3xl mt-8 flex justify-between flex-col sm:flex-row">
+    <div
+      class:list={[
+        'mx-auto px-6 sm:px-6 max-w-3xl mt-8 flex justify-between flex-col sm:flex-row',
+        hasLeadForm && 'lg:col-start-1 lg:row-start-3',
+      ]}
+    >
       <PostTags tags={post.tags} class="mr-5 rtl:mr-0 rtl:ml-5" />
       <SocialShare url={url} text={post.title} class="mt-5 sm:mt-1 align-middle text-muted" />
     </div>
