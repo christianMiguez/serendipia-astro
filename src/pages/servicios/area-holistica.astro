@@ -1,0 +1,222 @@
+---
+import { getCollection } from 'astro:content';
+import Hero from '~/components/widgets/Hero.astro';
+import Content from '~/components/widgets/Content.astro';
+import Features2 from '~/components/widgets/Features2.astro';
+import FAQs from '~/components/widgets/FAQs.astro';
+import CallToAction from '~/components/widgets/CallToAction.astro';
+import Layout from '~/layouts/PageLayout.astro';
+import { getPermalink } from '~/utils/permalinks';
+
+export const prerender = true;
+
+const reservarUrl =
+  'https://wa.me/59899419419?text=Hola%2C+quisiera+reservar+una+sesi%C3%B3n+del+%C3%A1rea+hol%C3%ADstica+en+Espacio+Serendipia.%C2%BFMe+podr%C3%ADan+brindar+m%C3%A1s+informaci%C3%B3n%3F&utm_source=chatgpt.com';
+
+const areaPosts = [
+  'acupuntura',
+  'barras-de-access',
+  'flores-de-bach',
+  'registros-akashicos',
+  'constelaciones-familiares',
+  'quiropraxia',
+];
+const postsRaw = await getCollection('post');
+const posts = areaPosts
+  .map((id) => postsRaw.find((p) => p.id === id && !p.data.draft))
+  .filter((p): p is NonNullable<typeof p> => Boolean(p))
+  .sort((a, b) => {
+    const da = a.data.publishDate ? a.data.publishDate.getTime() : 0;
+    const db = b.data.publishDate ? b.data.publishDate.getTime() : 0;
+    return db - da;
+  });
+
+const cleanTitle = (title: string) => title.split(/\s+\|\s+/)[0].trim();
+
+const metadata = {
+  title: 'Área Holística',
+  description:
+    'Acupuntura, Barras de Access, Flores de Bach, Registros Akáshicos, Constelaciones Familiares y quiropraxia en el Cerro de Montevideo. Terapias complementarias en Espacio Serendipia.',
+};
+---
+
+<Layout metadata={metadata}>
+  <!-- Hero Widget ******************* -->
+
+  <Hero
+    tagline="Área Holística"
+    title="Terapias para el cuerpo y la mente"
+    subtitle="Un enfoque integral que integra cuerpo, mente y emociones. Acupuntura, Barras de Access, Flores de Bach, Registros Akáshicos, Constelaciones Familiares y quiropraxia, en el Cerro de Montevideo."
+    actions={[{ variant: 'primary', text: 'Reservar', href: reservarUrl, target: '_blank' }]}
+    image={{
+      src: 'https://images.unsplash.com/photo-1545205597-3d9f1644055e?auto=format&fit=crop&w=1600&q=80',
+      alt: 'Sesión de terapia holística en un entorno cálido',
+    }}
+  />
+
+  <!-- Content Widget **************** -->
+
+  <Content
+    isReversed
+    items={[
+      {
+        title: 'Acompañamiento personalizado',
+        description: 'Cada sesión se ajusta a lo que estás transitando, sin recetas: vos sos el centro del proceso.',
+        icon: 'tabler:user-heart',
+      },
+      {
+        title: 'Enfoque integral',
+        description: 'Trabajamos cuerpo, mente y emociones como parte de un mismo camino hacia el bienestar.',
+        icon: 'tabler:yin-yang',
+      },
+      {
+        title: 'Profesionales habilitadas',
+        description: 'Todas las terapias son brindadas por profesionales formados y en práctica continua.',
+        icon: 'tabler:certificate',
+      },
+      {
+        title: 'Espacio cálido y confidencial',
+        description: 'Sesiones individuales o en grupo, en un entorno seguro y respetuoso.',
+        icon: 'tabler:home-heart',
+      },
+    ]}
+    image={{
+      src: 'https://images.unsplash.com/photo-1519823551278-64ac92734fb1?auto=format&fit=crop&w=900&q=80',
+      alt: 'Sesión de terapia con flores o acupuntura',
+    }}
+  >
+    <Fragment slot="content">
+      <h3 class="text-2xl font-bold tracking-tight sm:text-3xl mb-2">Terapias complementarias</h3>
+      <p class="text-muted">
+        Las terapias del área holística no sustituyen a la atención médica ni a la psicología, sino que las
+        complementan. Te acompañan a conectar con vos, regular el sistema nervioso y abrir nuevas miradas sobre tu
+        proceso.
+      </p>
+    </Fragment>
+  </Content>
+
+  <!-- Grid de terapias del área ************** -->
+
+  <section class="px-4 sm:px-6 py-6 md:py-10">
+    <div class="max-w-7xl mx-auto">
+      <h3 class="text-2xl font-bold font-heading text-text-heading leading-tight mb-6 text-center">
+        Terapias del área
+      </h3>
+      <ul class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+        {
+          posts.map((post) => {
+            const link = getPermalink(post.id, 'post');
+            const title = cleanTitle(post.data.title);
+            const category = post.data.category || 'Terapias';
+            return (
+              <li>
+                <a
+                  href={link}
+                  class="block h-full bg-surface rounded-xl shadow-sm p-6 md:p-7 hover:shadow-md transition duration-200 ease-in"
+                >
+                  <span class="inline-block text-xs font-semibold uppercase tracking-wide rounded-full px-3 py-1 mb-4 bg-celeste-soft text-accent">
+                    {category}
+                  </span>
+                  <h2 class="text-lg font-bold font-heading text-text-heading leading-snug mb-3">{title}</h2>
+                  {post.data.excerpt && <p class="text-sm text-muted leading-relaxed">{post.data.excerpt}</p>}
+                  <span class="mt-5 inline-flex items-center text-accent font-semibold text-sm group-hover:text-text-heading transition">
+                    Conocé más
+                    <span class="ml-1" aria-hidden="true">
+                      →
+                    </span>
+                  </span>
+                </a>
+              </li>
+            );
+          })
+        }
+      </ul>
+    </div>
+  </section>
+
+  <!-- Features2 Widget ************** -->
+
+  <Features2
+    title="¿Qué terapia es para vos?"
+    subtitle="Una pequeña guía para orientarte. Si tenés dudas, escribinos y te ayudamos a elegir."
+    columns={3}
+    items={[
+      {
+        title: 'Acupuntura',
+        description: 'Una terapia milenaria basada en la Medicina Tradicional China para promover el equilibrio.',
+        icon: 'tabler:needle',
+      },
+      {
+        title: 'Barras de Access',
+        description: 'Una experiencia de relajación profunda que libera cargas y abre nuevas posibilidades.',
+        icon: 'tabler:brain',
+      },
+      {
+        title: 'Flores de Bach',
+        description: 'Acompañamiento natural orientado al bienestar emocional y el autoconocimiento.',
+        icon: 'tabler:flower',
+      },
+      {
+        title: 'Registros Akáshicos',
+        description: 'Un espacio de conexión y autoconocimiento para acompañar tu camino.',
+        icon: 'tabler:book',
+      },
+      {
+        title: 'Constelaciones Familiares',
+        description: 'Para comprender vínculos, sanar dinámicas familiares y mirar tu historia de otra forma.',
+        icon: 'tabler:users-group',
+      },
+      {
+        title: 'Quiropraxia',
+        description: 'Para mejorar la movilidad, soltar tensiones y recuperar el equilibrio del cuerpo.',
+        icon: 'tabler:bone',
+      },
+    ]}
+  />
+
+  <!-- FAQs Widget ******************* -->
+
+  <FAQs
+    title="Preguntas frecuentes"
+    columns={2}
+    items={[
+      {
+        title: '¿Reemplazan a la medicina o la psicología?',
+        description:
+          'No. Las terapias holísticas son complementarias. Si estás en tratamiento médico o psicológico, te sugerimos conversarlo con tu profesional.',
+      },
+      {
+        title: '¿Cómo elijo una terapia?',
+        description:
+          'Podés elegir por la descripción o escribiendo por WhatsApp. Te orientamos según lo que estés transitando.',
+      },
+      {
+        title: '¿Cuánto dura una sesión?',
+        description:
+          'Depende de la terapia: las sesiones individuales suelen durar entre 45 y 90 minutos. Te lo confirmamos al reservar.',
+      },
+      {
+        title: '¿Atienden grupo o solo individual?',
+        description:
+          'Ambos. Algunas terapias (como Constelaciones Familiares) son en grupo, otras son individuales. Te avisamos al reservar.',
+      },
+    ]}
+  />
+
+  <!-- CallToAction Widget *********** -->
+
+  <CallToAction
+    title="Reservá tu sesión"
+    subtitle="Escribinos por WhatsApp y te ayudamos a elegir la terapia que mejor encaje con lo que estás transitando."
+    actions={[
+      {
+        variant: 'primary',
+        text: 'HABLAR POR WHATSAPP',
+        href: reservarUrl,
+        target: '_blank',
+        icon: 'tabler:arrow-right',
+      },
+      { variant: 'tertiary', text: 'Ver área educativa', href: getPermalink('/servicios/area-educativa') },
+    ]}
+  />
+</Layout>

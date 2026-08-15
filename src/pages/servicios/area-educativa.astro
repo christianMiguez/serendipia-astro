@@ -1,0 +1,178 @@
+---
+import { getCollection } from 'astro:content';
+import Hero from '~/components/widgets/Hero.astro';
+import Features2 from '~/components/widgets/Features2.astro';
+import Steps2 from '~/components/widgets/Steps2.astro';
+import CallToAction from '~/components/widgets/CallToAction.astro';
+import Layout from '~/layouts/PageLayout.astro';
+import { getPermalink } from '~/utils/permalinks';
+
+export const prerender = true;
+
+const reservarUrl =
+  'https://wa.me/59899419419?text=Hola%2C+quisiera+anotarme+en+una+actividad+del+%C3%A1rea+educativa+en+Espacio+Serendipia.%C2%BFMe+podr%C3%ADan+brindar+m%C3%A1s+informaci%C3%B3n%3F&utm_source=chatgpt.com';
+
+const areaPosts = ['yoga', 'aero-yoga', 'pilates', 'baile', 'tarot'];
+const postsRaw = await getCollection('post');
+const posts = areaPosts
+  .map((id) => postsRaw.find((p) => p.id === id && !p.data.draft))
+  .filter((p): p is NonNullable<typeof p> => Boolean(p))
+  .sort((a, b) => {
+    const da = a.data.publishDate ? a.data.publishDate.getTime() : 0;
+    const db = b.data.publishDate ? b.data.publishDate.getTime() : 0;
+    return db - da;
+  });
+
+const cleanTitle = (title: string) => title.split(/\s+\|\s+/)[0].trim();
+
+const metadata = {
+  title: 'Área Educativa',
+  description:
+    'Yoga, AeroYoga, pilates, ritmos latinos y talleres de tarot en el Cerro de Montevideo. Actividades para mover el cuerpo y la mente en Espacio Serendipia.',
+};
+---
+
+<Layout metadata={metadata}>
+  <!-- Hero Widget ******************* -->
+
+  <Hero
+    tagline="Área Educativa"
+    title="Mové el cuerpo y la mente"
+    subtitle="Actividades y talleres pensados para que te movas, te relajés y te conozcas un poco más. Para todas las edades y niveles, en el Cerro de Montevideo."
+    actions={[{ variant: 'primary', text: 'Reservar', href: reservarUrl, target: '_blank' }]}
+    image={{
+      src: 'https://images.unsplash.com/photo-1593810451137-5dc55105dace?auto=format&fit=crop&w=1600&q=80',
+      alt: 'Clase grupal de yoga en un espacio luminoso',
+    }}
+  />
+
+  <!-- Features2 Widget ************** -->
+
+  <Features2
+    title="¿Qué podés hacer?"
+    subtitle="Elegí la actividad que más te guste. Todas las clases son dadas por docentes habilitadas."
+    columns={3}
+    items={[
+      {
+        title: 'Yoga (Hatha Yoga)',
+        description: 'Clases suaves para conectar con el cuerpo, reducir el estrés y mejorar tu bienestar.',
+        icon: 'tabler:yoga',
+        callToAction: { text: 'Ver más', href: getPermalink('yoga', 'post') },
+      },
+      {
+        title: 'AeroYoga',
+        description: 'Yoga aéreo con telas: una práctica que combina yoga, movimiento y suspensión.',
+        icon: 'tabler:feather',
+        callToAction: { text: 'Ver más', href: getPermalink('aero-yoga', 'post') },
+      },
+      {
+        title: 'Pilates',
+        description: 'Mejorá tu postura, fortalecé tu cuerpo y disfrutá del bienestar físico y mental.',
+        icon: 'tabler:heartbeat',
+        callToAction: { text: 'Ver más', href: getPermalink('pilates', 'post') },
+      },
+      {
+        title: 'Ritmos Latinos',
+        description: 'Bailá, divertite y hacé ejercicio con clases de baile pensadas para todas las edades.',
+        icon: 'tabler:music',
+        callToAction: { text: 'Ver más', href: getPermalink('baile', 'post') },
+      },
+      {
+        title: 'Talleres de Tarot',
+        description: 'Talleres y encuentros para aprender, reflexionar y explorar el tarot desde un lugar terapéutico.',
+        icon: 'tabler:cards',
+        callToAction: { text: 'Ver más', href: getPermalink('tarot', 'post') },
+      },
+      {
+        title: 'Niveles',
+        description: 'Clases abiertas y clases para principiantes. Si nunca practicaste, podés empezar acá.',
+        icon: 'tabler:stairs-up',
+      },
+    ]}
+  />
+
+  <!-- Grid de actividades del área ************ -->
+
+  <section class="px-4 sm:px-6 py-6 md:py-10">
+    <div class="max-w-7xl mx-auto">
+      <h3 class="text-2xl font-bold font-heading text-text-heading leading-tight mb-6 text-center">
+        Actividades del área
+      </h3>
+      <ul class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+        {
+          posts.map((post) => {
+            const link = getPermalink(post.id, 'post');
+            const title = cleanTitle(post.data.title);
+            const category = post.data.category || 'Actividades';
+            return (
+              <li>
+                <a
+                  href={link}
+                  class="block h-full bg-surface rounded-xl shadow-sm p-6 md:p-7 hover:shadow-md transition duration-200 ease-in"
+                >
+                  <span class="inline-block text-xs font-semibold uppercase tracking-wide rounded-full px-3 py-1 mb-4 bg-sage-soft text-secondary-strong">
+                    {category}
+                  </span>
+                  <h2 class="text-lg font-bold font-heading text-text-heading leading-snug mb-3">{title}</h2>
+                  {post.data.excerpt && <p class="text-sm text-muted leading-relaxed">{post.data.excerpt}</p>}
+                  <span class="mt-5 inline-flex items-center text-secondary-strong font-semibold text-sm group-hover:text-text-heading transition">
+                    Conocé más
+                    <span class="ml-1" aria-hidden="true">
+                      →
+                    </span>
+                  </span>
+                </a>
+              </li>
+            );
+          })
+        }
+      </ul>
+    </div>
+  </section>
+
+  <!-- Steps2 Widget ***************** -->
+
+  <Steps2
+    title="Cómo sumarte"
+    subtitle="Te acompañamos en todo el proceso. Desde la consulta hasta la primera clase."
+    items={[
+      {
+        title: 'Elegí tu actividad',
+        description: 'Revisá las opciones y elegí la actividad que más te guste. Si no estás seguro, te orientamos.',
+        icon: 'tabler:dots-vertical',
+      },
+      {
+        title: 'Coordinamos día y horario',
+        description: 'Te contamos los horarios disponibles y te reservamos la clase o el taller que te interesa.',
+        icon: 'tabler:calendar-event',
+      },
+      {
+        title: 'Llegás y disfrutás',
+        description: 'Venís con ropa cómoda y disfrutás de una actividad pensada para tu bienestar.',
+        icon: 'tabler:sparkles',
+      },
+      {
+        title: 'Repetís cuando puedas',
+        description: 'Las clases se toman sueltas o por mes, según la actividad y tu disponibilidad.',
+        icon: 'tabler:repeat',
+      },
+    ]}
+  />
+
+  <!-- CallToAction Widget *********** -->
+
+  <CallToAction
+    title="Reservá tu clase o taller"
+    subtitle="Escribinos por WhatsApp y te decimos los horarios disponibles y cómo anotarte."
+    actions={[
+      {
+        variant: 'primary',
+        text: 'HABLAR POR WHATSAPP',
+        href: reservarUrl,
+        target: '_blank',
+        icon: 'tabler:arrow-right',
+      },
+      { variant: 'tertiary', text: 'Ver área holística', href: getPermalink('/servicios/area-holistica') },
+    ]}
+  />
+</Layout>

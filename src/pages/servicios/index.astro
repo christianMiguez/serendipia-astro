@@ -1,0 +1,143 @@
+---
+import { getCollection } from 'astro:content';
+import Hero from '~/components/widgets/Hero.astro';
+import Features2 from '~/components/widgets/Features2.astro';
+import CallToAction from '~/components/widgets/CallToAction.astro';
+import Layout from '~/layouts/PageLayout.astro';
+import { getPermalink } from '~/utils/permalinks';
+
+export const prerender = true;
+
+const reservarUrl =
+  'https://wa.me/59899419419?text=Hola%2C+quisiera+consultar+por+el+alquiler+de+un+consultorio+en+Espacio+Serendipia.+%C2%BFMe+podr%C3%ADan+brindar+m%C3%A1s+informaci%C3%B3n%3F&utm_source=chatgpt.com';
+
+const postsRaw = await getCollection('post');
+const posts = postsRaw
+  .filter((p) => !p.data.draft)
+  .sort((a, b) => {
+    const da = a.data.publishDate ? a.data.publishDate.getTime() : 0;
+    const db = b.data.publishDate ? b.data.publishDate.getTime() : 0;
+    return db - da;
+  });
+
+const badgeTints = [
+  { bg: 'bg-salmon-soft', text: 'text-primary-strong' },
+  { bg: 'bg-sage-soft', text: 'text-secondary-strong' },
+  { bg: 'bg-celeste-soft', text: 'text-accent' },
+];
+
+const cleanTitle = (title: string) => title.split(/\s+\|\s+/)[0].trim();
+
+const metadata = {
+  title: 'Servicios y actividades',
+  description:
+    'Terapia psicológica, terapias holísticas y actividades para el cuerpo y la mente en el Cerro de Montevideo. Conocé todo lo que tenés disponible en Espacio Serendipia.',
+};
+---
+
+<Layout metadata={metadata}>
+  <!-- Hero Widget ******************* -->
+
+  <Hero
+    tagline="Servicios"
+    title="Todo lo que tenemos para vos"
+    subtitle="Reunimos en el Cerro de Montevideo la salud mental, las terapias holísticas y las actividades para el cuerpo y la mente. Elegí el acompañamiento que necesitás."
+    actions={[{ variant: 'primary', text: 'Reservar', href: reservarUrl, target: '_blank' }]}
+    image={{
+      src: 'https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&w=1600&q=80',
+      alt: 'Profesionales y actividades en Espacio Serendipia',
+    }}
+  />
+
+  <!-- Features2 Widget ************** -->
+
+  <Features2
+    title="Tres áreas de bienestar"
+    subtitle="Explorá cada área para descubrir sus servicios y actividades."
+    columns={3}
+    items={[
+      {
+        title: 'Salud Mental',
+        description:
+          'Acompañamiento psicológico individual, de pareja y para adolescentes, en un espacio confidencial.',
+        icon: 'tabler:brain',
+        callToAction: { text: 'Ver el área', href: getPermalink('/servicios/salud-mental') },
+      },
+      {
+        title: 'Área Educativa',
+        description: 'Yoga, AeroYoga, pilates, ritmos latinos y talleres de tarot para mover el cuerpo y la mente.',
+        icon: 'tabler:school',
+        callToAction: { text: 'Ver el área', href: getPermalink('/servicios/area-educativa') },
+      },
+      {
+        title: 'Área Holística',
+        description:
+          'Acupuntura, Barras de Access, Flores de Bach, Registros Akáshicos, Constelaciones Familiares y quiropraxia.',
+        icon: 'tabler:flower',
+        callToAction: { text: 'Ver el área', href: getPermalink('/servicios/area-holistica') },
+      },
+    ]}
+  />
+
+  <!-- Grid de servicios ************* -->
+
+  <section class="px-4 sm:px-6 py-6 md:py-10">
+    <div class="max-w-7xl mx-auto">
+      <h3 class="text-2xl font-bold font-heading text-text-heading leading-tight mb-6 text-center">
+        ✨ Todos los servicios y actividades
+      </h3>
+      <p class="text-muted leading-relaxed text-center mb-8">
+        Cada servicio se sirve en su propia página con detalles, precios y formas de reserva.
+      </p>
+      <ul class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+        {
+          posts.map((post, i) => {
+            const tint = badgeTints[i % badgeTints.length];
+            const link = getPermalink(post.id, 'post');
+            const title = cleanTitle(post.data.title);
+            const category = post.data.category || 'Servicios';
+            return (
+              <li>
+                <a
+                  href={link}
+                  class="block h-full bg-surface rounded-xl shadow-sm p-6 md:p-7 hover:shadow-md transition duration-200 ease-in"
+                >
+                  <span
+                    class={`inline-block text-xs font-semibold uppercase tracking-wide rounded-full px-3 py-1 mb-4 ${tint.bg} ${tint.text}`}
+                  >
+                    {category}
+                  </span>
+                  <h2 class="text-lg font-bold font-heading text-text-heading leading-snug mb-3">{title}</h2>
+                  {post.data.excerpt && <p class="text-sm text-muted leading-relaxed">{post.data.excerpt}</p>}
+                  <span class="mt-5 inline-flex items-center text-primary-strong font-semibold text-sm group-hover:text-text-heading transition">
+                    Conocé más
+                    <span class="ml-1" aria-hidden="true">
+                      →
+                    </span>
+                  </span>
+                </a>
+              </li>
+            );
+          })
+        }
+      </ul>
+    </div>
+  </section>
+
+  <!-- CallToAction Widget *********** -->
+
+  <CallToAction
+    title="¿No sabés por dónde empezar?"
+    subtitle="Escribinos por WhatsApp y te ayudamos a elegir el servicio o actividad que mejor encaje con vos."
+    actions={[
+      {
+        variant: 'primary',
+        text: 'HABLAR POR WHATSAPP',
+        href: reservarUrl,
+        target: '_blank',
+        icon: 'tabler:arrow-right',
+      },
+      { variant: 'tertiary', text: 'Ver nosotros', href: getPermalink('/nosotros') },
+    ]}
+  />
+</Layout>

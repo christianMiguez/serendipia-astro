@@ -1,0 +1,285 @@
+---
+import Hero2 from '~/components/widgets/Hero2.astro';
+import Content from '~/components/widgets/Content.astro';
+import Stats from '~/components/widgets/Stats.astro';
+import Pricing from '~/components/widgets/Pricing.astro';
+import Steps2 from '~/components/widgets/Steps2.astro';
+import Features2 from '~/components/widgets/Features2.astro';
+import FAQs from '~/components/widgets/FAQs.astro';
+import Testimonials from '~/components/widgets/Testimonials.astro';
+import CallToAction from '~/components/widgets/CallToAction.astro';
+import Layout from '~/layouts/PageLayout.astro';
+import { getPermalink } from '~/utils/permalinks';
+
+export const prerender = true;
+
+const reservarUrl =
+  'https://wa.me/59899419419?text=Hola%2C+quisiera+consultar+por+el+alquiler+de+un+consultorio+en+Espacio+Serendipia.+%C2%BFMe+podr%C3%ADan+brindar+m%C3%A1s+informaci%C3%B3n%3F&utm_source=chatgpt.com';
+
+const metadata = {
+  title: 'Alquiler de consultorios',
+  description:
+    'Alquilá un consultorio por hora en el Cerro de Montevideo. Espacios cómodos, cálidos y equipados para psicólogos, terapeutas y profesionales de la salud y el bienestar.',
+};
+---
+
+<Layout metadata={metadata}>
+  <!-- Hero2 Widget ******************* -->
+
+  <Hero2
+    tagline="Consultorios"
+    title="Tu consultorio por hora en el Cerro"
+    subtitle="Alquilá un espacio cómodo, cálido y equipado para tus sesiones. Sin contratos, sin gastos fijos: pagás solo lo que usás. Sujeto a disponibilidad."
+    actions={[
+      { variant: 'primary', text: 'RESERVAR CONSULTORIO', href: reservarUrl, target: '_blank' },
+      {
+        variant: 'tertiary',
+        text: 'Ver profesionales',
+        href: getPermalink('/profesionales'),
+        icon: 'tabler:arrow-right',
+      },
+    ]}
+    image={{
+      src: 'https://images.unsplash.com/photo-1551076805-e1909047d5b8?auto=format&fit=crop&w=1200&q=80',
+      alt: 'Consultorio profesional cómodo y luminoso',
+    }}
+  />
+
+  <!-- Stats Widget ****************** -->
+
+  <Stats
+    title="Disponibilidad y flexibilidad"
+    subtitle="Diseñado para profesionales independientes y proyectos a medida."
+    stats={[
+      { title: 'Consultorios disponibles', amount: '4' },
+      { title: 'Horas por día', amount: '12' },
+      { title: 'Días por semana', amount: '6' },
+      { title: 'Contrato mínimo', amount: '0' },
+    ]}
+  />
+
+  <!-- Content Widget **************** -->
+
+  <Content
+    items={[
+      {
+        title: 'Equipamiento básico',
+        description: 'Camilla, escritorio, sillas, sillón y caja de luz (en algunos consultorios).',
+        icon: 'tabler:bed',
+      },
+      {
+        title: 'Calefacción y aire',
+        description: 'Espacio cálido todo el año, con calefacción y ventilación adecuadas.',
+        icon: 'tabler:temperature',
+      },
+      {
+        title: 'Wi-Fi y sala de espera',
+        description: 'Internet estable y sala de espera cómoda para tus pacientes.',
+        icon: 'tabler:wifi',
+      },
+      {
+        title: 'Privacidad y baño',
+        description: 'Ambiente privado y discreto, con baño accesible para pacientes y profesionales.',
+        icon: 'tabler:door',
+      },
+    ]}
+    image={{
+      src: 'https://images.unsplash.com/photo-1631217868264-e5b90bb7c133?auto=format&fit=crop&w=900&q=80',
+      alt: 'Interior de un consultorio profesional con camilla',
+    }}
+  >
+    <Fragment slot="content">
+      <h3 class="text-2xl font-bold tracking-tight sm:text-3xl mb-2">¿Qué incluye cada consultorio?</h3>
+      <p class="text-muted">
+        Cada consultorio está equipado para que llegues con lo justo y tengas todo lo necesario para una sesión
+        profesional. Si precisás algún elemento específico, consultanos por WhatsApp.
+      </p>
+    </Fragment>
+  </Content>
+
+  <!-- Pricing Widget ***************** -->
+
+  <Pricing
+    title="Modalidades de alquiler"
+    subtitle="Elegí la que mejor encaje con tu actividad. Todos los precios son orientativos y sujetos a disponibilidad."
+    prices={[
+      {
+        title: 'Por hora',
+        subtitle: 'Para sesiones puntuales',
+        price: 250,
+        period: 'por hora',
+        items: [
+          { description: 'Ideal para sesiones individuales', icon: 'tabler:check' },
+          { description: 'Reserva desde WhatsApp o app', icon: 'tabler:check' },
+          { description: 'Acceso a sala de espera', icon: 'tabler:check' },
+        ],
+        callToAction: { text: 'Reservar', href: reservarUrl, target: '_blank' },
+      },
+      {
+        title: 'Media jornada',
+        subtitle: '4 horas consecutivas',
+        price: 900,
+        period: 'por media jornada',
+        hasRibbon: true,
+        ribbonTitle: 'Más elegida',
+        items: [
+          { description: 'Precio por hora reducido', icon: 'tabler:check' },
+          { description: 'Ideal para consultas matutinas o vespertinas', icon: 'tabler:check' },
+          { description: 'Reserva recurrente con prioridad', icon: 'tabler:check' },
+        ],
+        callToAction: { text: 'Reservar', href: reservarUrl, target: '_blank' },
+      },
+      {
+        title: 'Abono mensual',
+        subtitle: 'Turnos fijos en la semana',
+        price: 3200,
+        period: 'por mes',
+        items: [
+          { description: 'Hasta 3 turnos fijos por semana', icon: 'tabler:check' },
+          { description: 'Prioridad en la agenda', icon: 'tabler:check' },
+          { description: 'Mejor precio por hora', icon: 'tabler:check' },
+        ],
+        callToAction: { text: 'Reservar', href: reservarUrl, target: '_blank' },
+      },
+    ]}
+  />
+
+  <!-- Steps2 Widget ***************** -->
+
+  <Steps2
+    title="Cómo reservar tu consultorio"
+    subtitle="En cuatro pasos tenés el consultorio reservado para tu próxima sesión."
+    items={[
+      {
+        title: 'Escribinos',
+        description: 'Contanos qué día, horario y consultorio necesitás. Te confirmamos disponibilidad.',
+        icon: 'tabler:message',
+      },
+      {
+        title: 'Reservás el turno',
+        description: 'Te confirmamos el turno y te pasamos los datos de pago y acceso al espacio.',
+        icon: 'tabler:calendar-check',
+      },
+      {
+        title: 'Llegás al espacio',
+        description: 'Llegás 5 minutos antes, te acomodás en sala de espera y pasás al consultorio a horario.',
+        icon: 'tabler:door-enter',
+      },
+      {
+        title: 'Devolvés el espacio',
+        description: 'Al terminar, dejás el consultorio ordenado para el siguiente profesional.',
+        icon: 'tabler:door-exit',
+      },
+    ]}
+  />
+
+  <!-- Features2 Widget ************** -->
+
+  <Features2
+    title="¿Por qué alquilar en Serendipia?"
+    subtitle="Pensado para profesionales que necesitan un espacio sin las cargas de mantenerlo."
+    columns={4}
+    items={[
+      {
+        title: 'En el Cerro',
+        description: 'Ubicación accesible para tus pacientes del oeste de Montevideo, con transporte cercano.',
+        icon: 'tabler:map-pin',
+      },
+      {
+        title: 'Sin contratos',
+        description: 'No hay pago fijo mensual obligatorio: alquilás cuando lo necesitás, por hora o por jornada.',
+        icon: 'tabler:file-off',
+      },
+      {
+        title: 'Reserva simple',
+        description: 'Coordinás por WhatsApp o por la app, sin intermediarios ni vueltas.',
+        icon: 'tabler:device-mobile',
+      },
+      {
+        title: 'Espacio profesional',
+        description: 'Un entorno cuidado y discreto, que recibe a tus pacientes como se merecen.',
+        icon: 'tabler:building-store',
+      },
+    ]}
+  />
+
+  <!-- FAQs Widget ******************* -->
+
+  <FAQs
+    title="Preguntas frecuentes"
+    columns={2}
+    items={[
+      {
+        title: '¿Necesito un contrato para alquilar?',
+        description:
+          'No. La modalidad por hora no requiere contrato. El abono mensual es opcional y se acuerda por escrito.',
+      },
+      {
+        title: '¿Cómo pago?',
+        description: 'Por transferencia o efectivo, antes o al momento de usar el consultorio.',
+      },
+      {
+        title: '¿Puedo cancelar un turno?',
+        description:
+          'Sí. Te pedimos avisar con al menos 24 horas de anticipación para liberar el consultorio para otro profesional.',
+      },
+      {
+        title: '¿Qué pasa si necesito un horario fijo?',
+        description: 'Podés acordar turnos fijos semanales, con prioridad en la agenda y un mejor precio por hora.',
+      },
+    ]}
+  />
+
+  <!-- Testimonials Widget *********** -->
+
+  <Testimonials
+    title="Lo que dicen los profesionales que alquilan"
+    testimonials={[
+      {
+        testimonial:
+          'Alquilo un consultorio por hora para mis pacientes de psicología y la logística es perfecta. Llego, atiendo y me voy.',
+        name: 'Fernando R.',
+        job: 'Psicólogo',
+        image: {
+          src: 'https://images.unsplash.com/photo-1545167622-3a6ac756afa4?auto=format&fit=crop&w=400&q=80',
+          alt: 'Foto de Fernando',
+        },
+      },
+      {
+        testimonial:
+          'El espacio es cálido y bien ubicado. Mis pacientes del Cerro y del oeste me lo agradecen cada semana.',
+        name: 'Mariana L.',
+        job: 'Terapeuta floral',
+        image: {
+          src: 'https://images.unsplash.com/photo-1561406636-b80293969660?auto=format&fit=crop&w=400&q=80',
+          alt: 'Foto de Mariana',
+        },
+      },
+      {
+        testimonial: 'La reserva por WhatsApp me solucionó el día. Sin vueltas, sin contratos, reservás y vas.',
+        name: 'Lucía P.',
+        job: 'Profesora de yoga',
+        image: {
+          src: 'https://images.unsplash.com/photo-1618835962148-cf177563c6c0?auto=format&fit=crop&w=400&q=80',
+          alt: 'Foto de Lucía',
+        },
+      },
+    ]}
+  />
+
+  <!-- CallToAction Widget *********** -->
+
+  <CallToAction
+    title="¿Necesitás un consultorio?"
+    subtitle="Escribinos por WhatsApp y te confirmamos disponibilidad, precios y formas de reserva."
+    actions={[
+      {
+        variant: 'primary',
+        text: 'RESERVAR CONSULTORIO',
+        href: reservarUrl,
+        target: '_blank',
+        icon: 'tabler:arrow-right',
+      },
+    ]}
+  />
+</Layout>

@@ -1,0 +1,203 @@
+---
+import { getCollection } from 'astro:content';
+import Hero2 from '~/components/widgets/Hero2.astro';
+import Content from '~/components/widgets/Content.astro';
+import Steps2 from '~/components/widgets/Steps2.astro';
+import FAQs from '~/components/widgets/FAQs.astro';
+import CallToAction from '~/components/widgets/CallToAction.astro';
+import Layout from '~/layouts/PageLayout.astro';
+import { getPermalink } from '~/utils/permalinks';
+
+export const prerender = true;
+
+const reservarUrl =
+  'https://wa.me/59899419419?text=Hola%2C+quisiera+reservar+una+sesi%C3%B3n+de+psicolog%C3%ADa+en+Espacio+Serendipia.%C2%BFMe+podr%C3%ADan+brindar+m%C3%A1s+informaci%C3%B3n%3F&utm_source=chatgpt.com';
+
+const areaPosts = ['psicologia'];
+const postsRaw = await getCollection('post');
+const posts = postsRaw
+  .filter((p) => areaPosts.includes(p.id) && !p.data.draft)
+  .sort((a, b) => {
+    const da = a.data.publishDate ? a.data.publishDate.getTime() : 0;
+    const db = b.data.publishDate ? b.data.publishDate.getTime() : 0;
+    return db - da;
+  });
+
+const cleanTitle = (title: string) => title.split(/\s+\|\s+/)[0].trim();
+
+const metadata = {
+  title: 'Salud Mental',
+  description:
+    'Atención psicológica en el Cerro de Montevideo para adolescentes, adultos y parejas. Acompañamiento profesional, confidencial y respetuoso en Espacio Serendipia.',
+};
+---
+
+<Layout metadata={metadata}>
+  <!-- Hero2 Widget ******************* -->
+
+  <Hero2
+    tagline="Salud Mental"
+    title="Acompañamiento psicológico en el Cerro"
+    subtitle="Un espacio confidencial y respetuoso para que cuides tu bienestar emocional. Atención individual, de pareja y para adolescentes, con profesionales que escuchan sin juzgar."
+    actions={[
+      { variant: 'primary', text: 'Reservar sesión', href: reservarUrl, target: '_blank' },
+      { variant: 'tertiary', text: 'Ver profesionales', href: getPermalink('/profesionales') },
+    ]}
+    image={{
+      src: 'https://images.unsplash.com/photo-1573497620053-ea5300f94f21?auto=format&fit=crop&w=1200&q=80',
+      alt: 'Sesión de terapia psicológica en un entorno cálido',
+    }}
+  />
+
+  <!-- Content Widget **************** -->
+
+  <Content
+    items={[
+      {
+        title: 'Atención individual',
+        description:
+          'Acompañamiento para adultas y adultos, y para jóvenes a partir de un encuadre profesional, confidencial y respetuoso.',
+        icon: 'tabler:user',
+      },
+      {
+        title: 'Terapia de pareja',
+        description: 'Un espacio para que ambas partes dialoguen, comprendan su vínculo y encuentren nuevos caminos.',
+        icon: 'tabler:hearts',
+      },
+      {
+        title: 'Adolescentes',
+        description: 'Acompañamiento pensado para esta etapa, con un lenguaje cercano y un encuadre claro.',
+        icon: 'tabler:school-bell',
+      },
+      {
+        title: 'Encuadre claro',
+        description: 'Sesiones de 50 minutos, con frecuencia semanal o quincenal según el proceso de cada persona.',
+        icon: 'tabler:clock',
+      },
+    ]}
+    image={{
+      src: 'https://images.unsplash.com/photo-1545205597-3d9f1644055e?auto=format&fit=crop&w=900&q=80',
+      alt: 'Consultorio de psicología cálido y privado',
+    }}
+  >
+    <Fragment slot="content">
+      <h3 class="text-2xl font-bold tracking-tight sm:text-3xl mb-2">¿Cómo trabajamos?</h3>
+      <p class="text-muted">
+        La terapia es un proceso personal. Por eso, la primera sesión es un espacio de encuentro: conocernos, escucharte
+        y acordar un encuadre que tenga sentido para vos. A partir de ahí, avanzamos a tu ritmo.
+      </p>
+    </Fragment>
+  </Content>
+
+  <!-- Grid de servicios del área ************* -->
+
+  {
+    posts.length > 0 && (
+      <section class="px-4 sm:px-6 py-6 md:py-10">
+        <div class="max-w-7xl mx-auto">
+          <h3 class="text-2xl font-bold font-heading text-text-heading leading-tight mb-6 text-center">
+            Servicios de esta área
+          </h3>
+          <ul class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+            {posts.map((post) => {
+              const link = getPermalink(post.id, 'post');
+              const title = cleanTitle(post.data.title);
+              const category = post.data.category || 'Servicios';
+              return (
+                <li>
+                  <a
+                    href={link}
+                    class="block h-full bg-surface rounded-xl shadow-sm p-6 md:p-7 hover:shadow-md transition duration-200 ease-in"
+                  >
+                    <span class="inline-block text-xs font-semibold uppercase tracking-wide rounded-full px-3 py-1 mb-4 bg-celeste-soft text-accent">
+                      {category}
+                    </span>
+                    <h2 class="text-lg font-bold font-heading text-text-heading leading-snug mb-3">{title}</h2>
+                    {post.data.excerpt && <p class="text-sm text-muted leading-relaxed">{post.data.excerpt}</p>}
+                    <span class="mt-5 inline-flex items-center text-primary-strong font-semibold text-sm group-hover:text-text-heading transition">
+                      Conocé más
+                      <span class="ml-1" aria-hidden="true">
+                        →
+                      </span>
+                    </span>
+                  </a>
+                </li>
+              );
+            })}
+          </ul>
+        </div>
+      </section>
+    )
+  }
+
+  <!-- Steps2 Widget ***************** -->
+
+  <Steps2
+    title="Cómo reservar tu sesión"
+    subtitle="Es simple: en tres pasos ya tenés tu sesión agendada. Si tenés dudas, escribinos por WhatsApp y te orientamos."
+    items={[
+      {
+        title: 'Escribinos',
+        description:
+          'Contanos qué buscás: atención individual, de pareja o para un adolescente. Te orientamos sin compromiso.',
+        icon: 'tabler:message',
+      },
+      {
+        title: 'Coordinamos día y hora',
+        description:
+          'Te asignamos un profesional disponible y acordamos el primer encuentro, presencial o virtual según corresponda.',
+        icon: 'tabler:calendar',
+      },
+      {
+        title: 'Empezá tu proceso',
+        description: 'Llegás al espacio, nos conocemos y armamos juntxs un encuadre que tenga sentido para vos.',
+        icon: 'tabler:heart',
+      },
+    ]}
+  />
+
+  <!-- FAQs Widget ******************* -->
+
+  <FAQs
+    title="Preguntas frecuentes"
+    columns={2}
+    items={[
+      {
+        title: '¿Cuánto dura una sesión?',
+        description:
+          'Cada sesión dura aproximadamente 50 minutos. La frecuencia más común es semanal o quincenal, pero se acuerda según tu proceso.',
+      },
+      {
+        title: '¿Es confidencial?',
+        description:
+          'Sí. Todo lo que conversás en sesión queda entre vos y tu profesional, dentro de los marcos éticos de la psicología.',
+      },
+      {
+        title: '¿Cómo pago?',
+        description:
+          'Se abona por sesión, en efectivo o por transferencia. Si tenés obra social, consultanos para ver las posibilidades.',
+      },
+      {
+        title: '¿Atienden adolescentes?',
+        description:
+          'Sí, contamos con profesionales que trabajan con adolescentes, con un lenguaje cercano y un encuadre claro.',
+      },
+    ]}
+  />
+
+  <!-- CallToAction Widget *********** -->
+
+  <CallToAction
+    title="Reservá tu primera sesión"
+    subtitle="Si llegaste hasta acá, ya diste el primer paso. Escribinos y te ayudamos a empezar tu proceso."
+    actions={[
+      {
+        variant: 'primary',
+        text: 'HABLAR POR WHATSAPP',
+        href: reservarUrl,
+        target: '_blank',
+        icon: 'tabler:arrow-right',
+      },
+    ]}
+  />
+</Layout>

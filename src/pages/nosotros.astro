@@ -1,0 +1,213 @@
+---
+import Features2 from '~/components/widgets/Features2.astro';
+import Content from '~/components/widgets/Content.astro';
+import Hero2 from '~/components/widgets/Hero2.astro';
+import Stats from '~/components/widgets/Stats.astro';
+import Steps2 from '~/components/widgets/Steps2.astro';
+import Testimonials from '~/components/widgets/Testimonials.astro';
+import CallToAction from '~/components/widgets/CallToAction.astro';
+import Layout from '~/layouts/PageLayout.astro';
+import { getPermalink } from '~/utils/permalinks';
+
+export const prerender = true;
+
+const metadata = {
+  title: 'Nosotros',
+  description:
+    'Espacio Serendipia es un multiespacio de bienestar en el Cerro de Montevideo donde conviven la salud mental, las terapias holísticas y las actividades para el cuerpo y la mente.',
+};
+---
+
+<Layout metadata={metadata}>
+  <!-- Hero2 Widget ******************* -->
+
+  <Hero2
+    tagline="Nosotros"
+    title="Bienestar integral en el corazón del Cerro"
+    subtitle="Somos un multiespacio de bienestar en el Cerro de Montevideo. Combinamos terapia psicológica, terapias holísticas y actividades para acompañarte en tu proceso de crecimiento, sanar y bienestar."
+    actions={[
+      { variant: 'primary', text: 'Ver servicios', href: getPermalink('/servicios') },
+      { variant: 'tertiary', text: 'Contactarnos', href: getPermalink('/contacto') },
+    ]}
+    image={{
+      src: 'https://images.unsplash.com/photo-1545205597-3d9f1644055e?auto=format&fit=crop&w=1200&q=80',
+      alt: 'Espacio luminoso y cálido de bienestar en el Cerro de Montevideo',
+    }}
+  />
+
+  <!-- Stats Widget ****************** -->
+
+  <Stats
+    title="Serendipia en números"
+    subtitle="Un espacio que crece junto a la comunidad del Cerro."
+    stats={[
+      { title: 'Años en el barrio', amount: '5+' },
+      { title: 'Profesionales', amount: '12' },
+      { title: 'Consultorios', amount: '4' },
+      { title: 'Disciplinas', amount: '15+' },
+    ]}
+  />
+
+  <!-- Content Widget **************** -->
+
+  <Content
+    isReversed
+    items={[
+      {
+        title: 'Nuestra misión',
+        description:
+          'Acompañar el bienestar integral de las personas del Cerro y alrededores con un espacio cálido, profesional y accesible.',
+        icon: 'tabler:target',
+      },
+      {
+        title: 'Nuestra visión',
+        description: 'Ser un referente de salud mental, terapias holísticas y actividades en el oeste de Montevideo.',
+        icon: 'tabler:eye',
+      },
+      {
+        title: 'Nuestra propuesta',
+        description:
+          'Reunir en un mismo lugar psicología, terapias alternativas, y actividades para el cuerpo y la mente.',
+        icon: 'tabler:heart',
+      },
+      {
+        title: 'Nuestro compromiso',
+        description:
+          'Atención humana, confidencial y respetuosa, con profesionales que se renuevan y forman de manera continua.',
+        icon: 'tabler:shield-check',
+      },
+    ]}
+    image={{
+      src: 'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?auto=format&fit=crop&w=900&q=80',
+      alt: 'Sesión de terapia en un entorno cálido',
+    }}
+  >
+    <Fragment slot="content">
+      <h3 class="text-2xl font-bold tracking-tight sm:text-3xl mb-2">Quiénes somos</h3>
+      <p class="text-muted">
+        Espacio Serendipia nace de la idea de reunir, en un mismo lugar, distintas formas de cuidar la salud y el
+        bienestar. Hoy es un multiespacio donde conviven profesionales independientes que comparten una misma forma de
+        acompañar: con escucha, respeto y presencia.
+      </p>
+    </Fragment>
+  </Content>
+
+  <!-- Steps2 Widget ***************** -->
+
+  <Steps2
+    title="Nuestros valores"
+    subtitle="Los principios que guían cada acompañamiento y cada actividad en Serendipia."
+    items={[
+      {
+        title: 'Acompañamiento humano',
+        description:
+          'Cada persona es recibida con escucha y sin juicios, en un espacio seguro y confidencial pensado para vos.',
+        icon: 'tabler:heart-handshake',
+      },
+      {
+        title: 'Inclusión y comunidad',
+        description:
+          'Acercamos el bienestar al Cerro de Montevideo con propuestas accesibles para todas las edades y contextos.',
+        icon: 'tabler:users',
+      },
+      {
+        title: 'Profesionalidad',
+        description:
+          'Trabajamos con profesionales habilitados y en formación continua, que respetan los marcos de cada disciplina.',
+        icon: 'tabler:certificate',
+      },
+      {
+        title: 'Bienestar integral',
+        description:
+          'Entendemos el bienestar como un camino que integra cuerpo, mente y emociones, no como un servicio aislado.',
+        icon: 'tabler:yin-yang',
+      },
+    ]}
+  />
+
+  <!-- Features2 Widget ************** -->
+
+  <Features2
+    title="¿Por qué elegirnos?"
+    subtitle="Un mismo espacio para cuidar tu salud mental, explorar terapias alternativas y mover el cuerpo."
+    columns={4}
+    items={[
+      {
+        title: 'Ubicación en el Cerro',
+        description: 'Estamos en el barrio Cerro de Montevideo, cerca tuyo, con acceso en transporte y a pie.',
+        icon: 'tabler:map-pin',
+      },
+      {
+        title: 'Espacio cálido',
+        description: 'Consultorios cómodos y luminosos pensados para que te sientas en calma desde el primer momento.',
+        icon: 'tabler:home-heart',
+      },
+      {
+        title: 'Multidisciplinar',
+        description:
+          'Psicología, terapias holísticas y actividades en un mismo lugar, para que elijas el acompañamiento que necesitás.',
+        icon: 'tabler:layout-grid',
+      },
+      {
+        title: 'Alquiler por hora',
+        description: 'Consultorios disponibles por hora para profesionales independientes de la salud y el bienestar.',
+        icon: 'tabler:clock-hour-9',
+      },
+    ]}
+  />
+
+  <!-- Testimonials Widget *********** -->
+
+  <Testimonials
+    title="Lo que dicen quienes nos visitan"
+    testimonials={[
+      {
+        testimonial:
+          'Llegué buscando terapia y me encontré con un espacio donde también pude sumarme a yoga. Me siento acompañada de muchas formas distintas.',
+        name: 'Lucía M.',
+        job: 'Vecina del Cerro',
+        image: {
+          src: 'https://images.unsplash.com/photo-1618835962148-cf177563c6c0?auto=format&fit=crop&w=400&q=80',
+          alt: 'Foto de Lucía',
+        },
+      },
+      {
+        testimonial:
+          'Alquilo un consultorio por hora para mis pacientes y la logística es impecable. El espacio es cálido y bien ubicado.',
+        name: 'Fernando R.',
+        job: 'Psicólogo',
+        image: {
+          src: 'https://images.unsplash.com/photo-1545167622-3a6ac756afa4?auto=format&fit=crop&w=400&q=80',
+          alt: 'Foto de Fernando',
+        },
+      },
+      {
+        testimonial:
+          'Las clases de pilates y las sesiones de Flores de Bach cambiaron mi forma de transitar el día. Súper recomiendo el espacio.',
+        name: 'Patricia S.',
+        job: 'Alumna',
+        image: {
+          src: 'https://images.unsplash.com/photo-1561406636-b80293969660?auto=format&fit=crop&w=400&q=80',
+          alt: 'Foto de Patricia',
+        },
+      },
+    ]}
+  />
+
+  <!-- CallToAction Widget *********** -->
+
+  <CallToAction
+    title="Vení a conocer el espacio"
+    subtitle="Estamos en el barrio Cerro de Montevideo. Escribinos y te contamos cómo llegar y qué tenés disponible."
+    actions={[
+      { variant: 'primary', text: 'CONTACTARNOS', href: getPermalink('/contacto') },
+      {
+        variant: 'tertiary',
+        text: 'HABLAR POR WHATSAPP',
+        href: 'https://wa.me/59899419419?text=Me%20contacto%20desde%20la%20web%3A%20',
+        target: '_blank',
+        icon: 'tabler:arrow-right',
+      },
+    ]}
+  />
+</Layout>
