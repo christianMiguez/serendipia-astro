@@ -9,7 +9,6 @@ import FAQs from '~/components/widgets/FAQs.astro';
 import Testimonials from '~/components/widgets/Testimonials.astro';
 import CallToAction from '~/components/widgets/CallToAction.astro';
 import Layout from '~/layouts/PageLayout.astro';
-import { getPermalink } from '~/utils/permalinks';
 
 export const prerender = true;
 
@@ -30,15 +29,7 @@ const metadata = {
     tagline="Consultorios"
     title="Tu consultorio por hora en el Cerro"
     subtitle="Alquilá un espacio cómodo, cálido y equipado para tus sesiones. Sin contratos, sin gastos fijos: pagás solo lo que usás. Sujeto a disponibilidad."
-    actions={[
-      { variant: 'primary', text: 'RESERVAR CONSULTORIO', href: reservarUrl, target: '_blank' },
-      {
-        variant: 'tertiary',
-        text: 'Ver profesionales',
-        href: getPermalink('/profesionales'),
-        icon: 'tabler:arrow-right',
-      },
-    ]}
+    actions={[{ variant: 'primary', text: 'RESERVAR CONSULTORIO', href: reservarUrl, target: '_blank' }]}
     image={{
       src: 'https://images.unsplash.com/photo-1551076805-e1909047d5b8?auto=format&fit=crop&w=1200&q=80',
       alt: 'Consultorio profesional cómodo y luminoso',

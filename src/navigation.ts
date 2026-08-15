@@ -36,11 +36,6 @@ export const headerData = {
         },
       ],
     },
-    {
-      text: 'Profesionales',
-      href: getPermalink('/profesionales'),
-    },
-    
   ],
   actions: [
     {
@@ -48,7 +43,7 @@ export const headerData = {
       variant: 'secondary',
       target: '_blank',
       href: 'https://wa.me/59899419419?text=Me+contacto+desde+la+web%3A+',
-      icon: 'tabler:arrow-right'
+      icon: 'tabler:arrow-right',
     },
   ],
 };
@@ -73,7 +68,6 @@ export const footerData = {
           text: 'Reservar desde la App',
           href: 'https://wa.me/59899419419?text=Hola%2C+quisiera+consultar+por+el+alquiler+de+un+consultorio+en+Espacio+Serendipia.+%C2%BFMe+podr%C3%ADan+brindar+m%C3%A1s+informaci%C3%B3n%3F&utm_source=chatgpt.com',
         },
-        { text: 'Para Profesionales', href: getPermalink('/profesionales') },
       ],
     },
     {
