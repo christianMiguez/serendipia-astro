@@ -18,12 +18,6 @@ const posts = postsRaw
     return db - da;
   });
 
-const badgeTints = [
-  { bg: 'bg-salmon-soft', text: 'text-primary-strong' },
-  { bg: 'bg-sage-soft', text: 'text-secondary-strong' },
-  { bg: 'bg-celeste-soft', text: 'text-accent' },
-];
-
 const cleanTitle = (title: string) => title.split(/\s+\|\s+/)[0].trim();
 
 const reservarUrl =
@@ -179,8 +173,7 @@ const metadata = {
       </p>
       <ul class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
         {
-          posts.map((post, i) => {
-            const tint = badgeTints[i % badgeTints.length];
+          posts.map((post) => {
             const link = getPermalink(post.id, 'post');
             const title = cleanTitle(post.data.title);
             const category = post.data.category || 'Servicios';
@@ -188,10 +181,10 @@ const metadata = {
               <li>
                 <a
                   href={link}
-                  class={`block h-full bg-surface rounded-xl shadow-sm p-6 md:p-7 hover:shadow-md transition duration-200 ease-in`}
+                  class={`relative block h-full bg-surface rounded-xl shadow-sm p-6 md:p-7 hover:shadow-md transition duration-200 ease-in overflow-hidden after:absolute after:inset-x-0 after:bottom-0 after:h-[5px] after:content-[''] after:bg-gradient-to-r after:from-logo-blue after:via-logo-teal after:to-logo-green`}
                 >
                   <span
-                    class={`inline-block text-xs font-semibold uppercase tracking-wide rounded-full px-3 py-1 mb-4 ${tint.bg} ${tint.text}`}
+                    class={`inline-block text-xs font-semibold uppercase tracking-wide rounded-full px-3 py-1 mb-4 bg-sage-soft text-primary-strong`}
                   >
                     {category}
                   </span>
