@@ -80,14 +80,13 @@ export const footerData = {
     },
   ],
   secondaryLinks: [
-    { text: 'Términos', href: getPermalink('/terms') },
-    { text: 'Política de Privacidad', href: getPermalink('/privacy') },
+    { text: 'Construido por', href: 'https://mediocieloestudio.com' },
   ],
   socialLinks: [
     { ariaLabel: 'Instagram', icon: 'tabler:brand-instagram', href: 'https://instagram.com/espacio_serendipia' },
     { ariaLabel: 'RSS', icon: 'tabler:rss', href: getAsset('/rss.xml') },
   ],
   footNote: `
-    Espacio Serendipia · Barrio Cerro, Montevideo · Todos los derechos reservados.
+    Espacio Serendipia · Villa del Cerro, Montevideo.
   `,
 };

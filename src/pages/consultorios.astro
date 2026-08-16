@@ -31,7 +31,7 @@ const metadata = {
     subtitle="Alquilá un espacio cómodo, cálido y equipado para tus sesiones. Sin contratos, sin gastos fijos: pagás solo lo que usás. Sujeto a disponibilidad."
     actions={[{ variant: 'primary', text: 'RESERVAR CONSULTORIO', href: reservarUrl, target: '_blank' }]}
     image={{
-      src: 'https://images.unsplash.com/photo-1551076805-e1909047d5b8?auto=format&fit=crop&w=1200&q=80',
+      src: '/consual2.webp',
       alt: 'Consultorio profesional cómodo y luminoso',
     }}
   />
@@ -75,7 +75,7 @@ const metadata = {
       },
     ]}
     image={{
-      src: 'https://images.unsplash.com/photo-1631217868264-e5b90bb7c133?auto=format&fit=crop&w=900&q=80',
+      src: '/consul3.webp',
       alt: 'Interior de un consultorio profesional con camilla',
     }}
   >
@@ -88,81 +88,9 @@ const metadata = {
     </Fragment>
   </Content>
 
-  <!-- Pricing Widget ***************** -->
-
-  <Pricing
-    title="Modalidades de alquiler"
-    subtitle="Elegí la que mejor encaje con tu actividad. Todos los precios son orientativos y sujetos a disponibilidad."
-    prices={[
-      {
-        title: 'Por hora',
-        subtitle: 'Para sesiones puntuales',
-        price: 250,
-        period: 'por hora',
-        items: [
-          { description: 'Ideal para sesiones individuales', icon: 'tabler:check' },
-          { description: 'Reserva desde WhatsApp o app', icon: 'tabler:check' },
-          { description: 'Acceso a sala de espera', icon: 'tabler:check' },
-        ],
-        callToAction: { text: 'Reservar', href: reservarUrl, target: '_blank' },
-      },
-      {
-        title: 'Media jornada',
-        subtitle: '4 horas consecutivas',
-        price: 900,
-        period: 'por media jornada',
-        hasRibbon: true,
-        ribbonTitle: 'Más elegida',
-        items: [
-          { description: 'Precio por hora reducido', icon: 'tabler:check' },
-          { description: 'Ideal para consultas matutinas o vespertinas', icon: 'tabler:check' },
-          { description: 'Reserva recurrente con prioridad', icon: 'tabler:check' },
-        ],
-        callToAction: { text: 'Reservar', href: reservarUrl, target: '_blank' },
-      },
-      {
-        title: 'Abono mensual',
-        subtitle: 'Turnos fijos en la semana',
-        price: 3200,
-        period: 'por mes',
-        items: [
-          { description: 'Hasta 3 turnos fijos por semana', icon: 'tabler:check' },
-          { description: 'Prioridad en la agenda', icon: 'tabler:check' },
-          { description: 'Mejor precio por hora', icon: 'tabler:check' },
-        ],
-        callToAction: { text: 'Reservar', href: reservarUrl, target: '_blank' },
-      },
-    ]}
-  />
-
+ 
   <!-- Steps2 Widget ***************** -->
 
-  <Steps2
-    title="Cómo reservar tu consultorio"
-    subtitle="En cuatro pasos tenés el consultorio reservado para tu próxima sesión."
-    items={[
-      {
-        title: 'Escribinos',
-        description: 'Contanos qué día, horario y consultorio necesitás. Te confirmamos disponibilidad.',
-        icon: 'tabler:message',
-      },
-      {
-        title: 'Reservás el turno',
-        description: 'Te confirmamos el turno y te pasamos los datos de pago y acceso al espacio.',
-        icon: 'tabler:calendar-check',
-      },
-      {
-        title: 'Llegás al espacio',
-        description: 'Llegás 5 minutos antes, te acomodás en sala de espera y pasás al consultorio a horario.',
-        icon: 'tabler:door-enter',
-      },
-      {
-        title: 'Devolvés el espacio',
-        description: 'Al terminar, dejás el consultorio ordenado para el siguiente profesional.',
-        icon: 'tabler:door-exit',
-      },
-    ]}
-  />
 
   <!-- Features2 Widget ************** -->
 
@@ -183,7 +111,7 @@ const metadata = {
       },
       {
         title: 'Reserva simple',
-        description: 'Coordinás por WhatsApp o por la app, sin intermediarios ni vueltas.',
+        description: 'Coordinás por la app, sin intermediarios ni vueltas.',
         icon: 'tabler:device-mobile',
       },
       {
@@ -212,11 +140,11 @@ const metadata = {
       {
         title: '¿Puedo cancelar un turno?',
         description:
-          'Sí. Te pedimos avisar con al menos 24 horas de anticipación para liberar el consultorio para otro profesional.',
+          'Sí. Podés cancelar con al menos 3 horas de anticipación para liberar el consultorio para otro profesional.',
       },
       {
         title: '¿Qué pasa si necesito un horario fijo?',
-        description: 'Podés acordar turnos fijos semanales, con prioridad en la agenda y un mejor precio por hora.',
+        description: 'Podés agendar con anterioridad en la agenda y reservar con anticipación ese horario fijo.',
       },
     ]}
   />
