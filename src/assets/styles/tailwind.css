@@ -68,6 +68,15 @@
   }
 }
 
+@keyframes btn-shine {
+  from {
+    transform: translateX(-150%);
+  }
+  to {
+    transform: translateX(150%);
+  }
+}
+
 @utility bg-page {
   background-color: var(--aw-color-bg-page);
 }
@@ -86,7 +95,23 @@
 
 @utility btn {
   @apply inline-flex items-center justify-center rounded-full bg-surface font-semibold text-center text-base text-page leading-snug transition h-12 px-7 md:px-9 ease-out duration-150 cursor-pointer hover:text-text-heading focus:ring-2 focus:ring-accent focus:ring-offset-2 focus:ring-offset-surface;
-  will-change: transform;
+  position: relative;
+  overflow: hidden;
+
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: linear-gradient(110deg, transparent 30%, rgb(255 255 255 / 0.35) 50%, transparent 70%);
+    transform: translateX(-150%);
+    pointer-events: none;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    &:hover::before {
+      animation: btn-shine 0.6s ease-out;
+    }
+  }
 }
 
 @utility btn-primary {
@@ -94,21 +119,14 @@
   color: #ffffff;
   border: 1px solid rgb(255 255 255 / 0.85);
   background-image: linear-gradient(90deg, #63bd78 0%, #45aaa9 100%);
-  background-size: 200% 100%;
-  background-position: 100% 0;
   box-shadow:
     inset 0 1px 0 rgb(255 255 255 / 0.35),
     0 1px 4px rgb(60 150 120 / 0.08);
-  transition:
-    transform 0.15s ease-out,
-    filter 0.15s ease-out,
-    background-position 0.3s ease-out;
+  transition: filter 0.15s ease-out;
 
   &:hover {
     color: #ffffff;
-    transform: scale(1.015);
     filter: saturate(1.12) brightness(1.06);
-    background-position: 0% 0;
   }
 }
 
@@ -121,7 +139,6 @@
     0 2px 8px rgb(80 60 100 / 0.08);
 
   &:hover {
-    transform: scale(1.015);
     filter: saturate(1.12) brightness(1.06);
   }
 }
@@ -136,7 +153,6 @@
 
   &:hover {
     color: rgb(57 61 61);
-    transform: scale(1.015);
     filter: saturate(1.12) brightness(1.06);
   }
 }
