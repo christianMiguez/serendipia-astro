@@ -1,0 +1,301 @@
+---
+import { Icon } from 'astro-icon/components';
+import Layout from '~/layouts/PageLayout.astro';
+import Button from '~/components/ui/Button.astro';
+import Steps2 from '~/components/widgets/Steps2.astro';
+import Features2 from '~/components/widgets/Features2.astro';
+import FAQs from '~/components/widgets/FAQs.astro';
+import CallToAction from '~/components/widgets/CallToAction.astro';
+import { getPermalink } from '~/utils/permalinks';
+import { floresDeBach as data } from '~/data/flores-de-bach';
+
+export const prerender = true;
+
+const areaHolisticaHref = getPermalink('/servicios/area-holistica');
+
+const metadata = {
+  title: data.metadata.title,
+  description: data.metadata.description,
+  canonical: data.metadata.canonical,
+  robots: { index: true, follow: true },
+  openGraph: {
+    type: 'article',
+    images: [{ url: data.hero.image, width: 1200, height: 630, alt: data.hero.imageAlt }],
+  },
+};
+
+const reveal =
+  'intersect-once intersect-quarter intersect-no-queue motion-safe:md:opacity-0 motion-safe:md:intersect:animate-fade-up-blur';
+---
+
+<Layout metadata={metadata}>
+  <!-- Hero full-bleed con parallax y pétalos ******************* -->
+  <section
+    class="fdb-hero relative h-[100svh] min-h-[600px] w-full overflow-hidden"
+    data-fdb-hero
+    aria-labelledby="fdb-hero-title"
+  >
+    <div class="fdb-hero-imgwrap absolute inset-x-0 -top-[7%] h-[114%]" data-parallax="img" aria-hidden="true">
+      <img
+        src={data.hero.image}
+        alt={data.hero.imageAlt}
+        class="h-full w-full object-cover"
+        loading="eager"
+        fetchpriority="high"
+        decoding="async"
+      />
+    </div>
+
+    <div
+      class="absolute inset-0 bg-gradient-to-b from-text-heading/25 via-text-heading/10 to-white/85"
+      aria-hidden="true"
+      data-parallax="overlay"
+    >
+    </div>
+    <div class="absolute inset-0 bg-gradient-to-r from-white/20 via-transparent to-transparent" aria-hidden="true">
+    </div>
+
+    <!-- Pétalos SVG flotando -->
+    <div class="fdb-petals pointer-events-none absolute inset-0 overflow-hidden" aria-hidden="true">
+      <span class="fdb-petal" style="left:8%;top:18%;--dur:11s;--delay:0s;color:rgb(77 164 129);--r:0deg"> </span>
+      <span class="fdb-petal" style="left:22%;top:62%;--dur:14s;--delay:1.2s;color:rgb(188 217 232);--r:35deg"> </span>
+      <span class="fdb-petal" style="left:42%;top:12%;--dur:12s;--delay:0.6s;color:rgb(208 226 204);--r:-22deg"> </span>
+      <span class="fdb-petal" style="left:58%;top:70%;--dur:13s;--delay:0.3s;color:rgb(250 226 219);--r:18deg"> </span>
+      <span class="fdb-petal" style="left:72%;top:24%;--dur:11.5s;--delay:1.8s;color:rgb(90 178 170);--r:-8deg"> </span>
+      <span class="fdb-petal" style="left:84%;top:48%;--dur:13.5s;--delay:0.9s;color:rgb(180 205 174);--r:42deg">
+      </span>
+      <span class="fdb-petal" style="left:14%;top:42%;--dur:12.5s;--delay:2.1s;color:rgb(188 217 232);--r:-30deg">
+      </span>
+      <span class="fdb-petal" style="left:50%;top:34%;--dur:14.5s;--delay:1.5s;color:rgb(77 164 129);--r:14deg"> </span>
+      <span class="fdb-petal" style="left:34%;top:82%;--dur:11.5s;--delay:0.45s;color:rgb(250 226 219);--r:-12deg">
+      </span>
+      <span class="fdb-petal" style="left:78%;top:78%;--dur:13s;--delay:1.1s;color:rgb(208 226 204);--r:28deg"> </span>
+    </div>
+
+    <div
+      class="relative z-10 mx-auto flex h-full max-w-5xl flex-col items-center justify-center px-6 text-center text-white"
+    >
+      <span
+        class="mb-5 inline-flex items-center gap-2 rounded-full border border-white/40 bg-white/10 px-4 py-1.5 text-sm font-semibold uppercase tracking-[0.2em] text-white backdrop-blur-md motion-safe:md:opacity-0 motion-safe:md:intersect:animate-fade-up-blur intersect-once intersect-quarter intersect-no-queue"
+      >
+        <Icon name="tabler:flower" class="h-4 w-4" />
+        {data.hero.tagline}
+      </span>
+      <h1
+        id="fdb-hero-title"
+        class="max-w-4xl text-balance font-heading text-4xl font-bold leading-[1.05] tracking-tight drop-shadow-[0_2px_24px_rgba(0,0,0,0.35)] motion-safe:md:opacity-0 motion-safe:md:intersect:animate-fade-up-blur intersect-once intersect-quarter intersect-no-queue sm:text-5xl md:text-6xl"
+      >
+        {data.hero.title}
+      </h1>
+      <p
+        class="mt-6 max-w-2xl text-balance text-lg text-white/90 drop-shadow-[0_1px_12px_rgba(0,0,0,0.3)] motion-safe:md:opacity-0 motion-safe:md:intersect:animate-fade-up-blur intersect-once intersect-quarter intersect-no-queue sm:text-xl"
+        set:html={data.hero.subtitle}
+      />
+      <div
+        class="mt-9 flex flex-wrap items-center justify-center gap-4 motion-safe:md:opacity-0 motion-safe:md:intersect:animate-fade-up-blur intersect-once intersect-quarter intersect-no-queue"
+      >
+        <Button
+          variant="primary"
+          href={data.whatsappHref}
+          target="_blank"
+          text="RESERVAR SESIÓN"
+          icon="tabler:arrow-right"
+        />
+        <Button variant="secondary" href={areaHolisticaHref} text="Ver área holística" />
+      </div>
+    </div>
+    <div
+      class="pointer-events-none absolute inset-x-0 bottom-0 z-10 h-24 bg-gradient-to-t from-bg-page to-transparent"
+      aria-hidden="true"
+    >
+    </div>
+  </section>
+
+  <!-- Intro ************************************************************* -->
+  <section class="px-6 py-16 sm:py-24">
+    <div class={`mx-auto max-w-3xl ${reveal}`}>
+      <span class="mb-3 inline-block text-sm font-semibold uppercase tracking-[0.18em] text-primary-strong"
+        >{data.intro.title}</span
+      >
+      <div
+        class="prose prose-lg max-w-none prose-headings:font-heading prose-headings:font-bold prose-headings:text-text-heading prose-p:text-muted prose-strong:text-text-heading"
+      >
+        <h2 class="text-3xl font-bold font-heading text-text-heading sm:text-4xl">{data.intro.title}</h2>
+        {data.intro.paragraphs.map((p) => <p set:html={p} />)}
+      </div>
+    </div>
+  </section>
+
+  <!-- Dr. Edward Bach *************************************************** -->
+  <section class="px-6 pb-16 sm:pb-24">
+    <div class="mx-auto grid max-w-6xl grid-cols-1 gap-12 lg:grid-cols-12">
+      <div class={`lg:col-span-7 ${reveal}`}>
+        <h2 class="text-3xl font-bold font-heading text-text-heading sm:text-4xl">{data.drBach.title}</h2>
+        <div class="prose prose-lg mt-6 max-w-none prose-p:text-muted prose-strong:text-text-heading">
+          {data.drBach.paragraphs.map((p) => <p set:html={p} />)}
+        </div>
+      </div>
+      <div class={`lg:col-span-5 ${reveal}`}>
+        <figure class="overflow-hidden rounded-3xl shadow-xl ring-1 ring-border">
+          <img
+            src="https://images.unsplash.com/photo-1582794549595-6d874e2c0868?auto=format&fit=crop&w=900&q=80"
+            alt="Manos sosteniendo un frasco de esencias florales"
+            class="aspect-[4/5] w-full object-cover"
+            loading="lazy"
+            decoding="async"
+          />
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- ¿En qué situaciones pueden acompañarte? ************************* -->
+  <section class="px-6 py-16 sm:py-20 bg-cream">
+    <div class="mx-auto max-w-7xl">
+      <div class={`mx-auto max-w-3xl text-center ${reveal}`}>
+        <h2 class="text-3xl font-bold font-heading text-text-heading sm:text-4xl">{data.situaciones.title}</h2>
+        <p class="mt-4 text-lg text-muted" set:html={data.situaciones.lead} />
+      </div>
+      <ul class="mt-12 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
+        {
+          data.situaciones.items.map((item) => (
+            <li
+              class:list={[
+                'group flex items-center gap-3 rounded-2xl border border-border bg-surface p-4 shadow-sm transition duration-200 hover:shadow-md',
+                reveal,
+              ]}
+            >
+              <span class="flex h-10 w-10 flex-none items-center justify-center rounded-full bg-sage-soft text-primary-strong">
+                <Icon name={item.icon || 'tabler:leaf'} class="h-5 w-5" />
+              </span>
+              <span class="font-semibold text-text-heading">{item.title}</span>
+            </li>
+          ))
+        }
+      </ul>
+      <p class={`mt-10 text-center text-sm text-muted ${reveal}`} set:html={data.situaciones.footnote} />
+    </div>
+  </section>
+
+  <!-- ¿Cómo es una consulta? (Steps2) ********************************** -->
+  <Steps2 title={data.consulta.title} subtitle={data.consulta.lead} items={data.consulta.steps} />
+
+  <!-- Beneficios (Features2) ****************************************** -->
+  <div class="bg-cream">
+    <Features2
+      title={data.beneficios.title}
+      subtitle={data.beneficios.lead}
+      columns={3}
+      items={data.beneficios.items}
+    />
+    <p class="mx-auto max-w-3xl px-6 pb-16 text-center text-sm text-muted" set:html={data.beneficios.footnote} />
+  </div>
+
+  <!-- ¿Dónde estamos? ************************************************* -->
+  <section class="px-6 py-16 sm:py-20">
+    <div class={`mx-auto max-w-4xl text-center ${reveal}`}>
+      <h2 class="text-3xl font-bold font-heading text-text-heading sm:text-4xl">{data.ubicacion.title}</h2>
+      <div class="mt-6 inline-flex flex-col items-center gap-1 text-lg text-text-heading">
+        <Icon name="tabler:map-pin" class="h-7 w-7 text-primary-strong" />
+        {data.ubicacion.lines.map((line) => <span class="font-medium" set:html={line} />)}
+      </div>
+      <p class="mt-4 text-muted" set:html={data.ubicacion.paragraph} />
+    </div>
+  </section>
+
+  <!-- FAQs ************************************************************ -->
+  <FAQs title={data.faqs.title} columns={2} items={data.faqs.items} />
+
+  <!-- CTA final con WhatsApp ******************************************* -->
+  <CallToAction
+    title={data.cta.title}
+    subtitle={data.cta.subtitle}
+    actions={[
+      { ...data.cta.primary, href: data.whatsappHref, target: '_blank' },
+      { ...data.cta.secondary, href: areaHolisticaHref },
+    ]}
+  />
+</Layout>
+
+<style is:inline>
+  .fdb-petal {
+    position: absolute;
+    display: block;
+    width: 2.5rem;
+    height: 5rem;
+    opacity: 0;
+    will-change: transform, opacity;
+    mix-blend-mode: multiply;
+    transform: translate3d(0, 0, 0) rotate(var(--r, 0deg));
+    animation: fdbPetalFloat var(--dur, 12s) var(--delay, 0s) ease-in-out infinite;
+  }
+  .fdb-petal::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: currentColor;
+    -webkit-mask: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 60'><path d='M15 0 C28 26 28 34 15 60 C2 34 2 26 15 0 Z' /></svg>")
+      center/contain no-repeat;
+    mask: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 60'><path d='M15 0 C28 26 28 34 15 60 C2 34 2 26 15 0 Z' /></svg>")
+      center/contain no-repeat;
+    border-radius: 50%;
+    filter: blur(0.4px);
+  }
+  @keyframes fdbPetalFloat {
+    0% {
+      opacity: 0;
+      transform: translate3d(0, -1vh, 0) rotate(var(--r, 0deg)) scale(0.85);
+    }
+    25% {
+      opacity: 0.7;
+    }
+    50% {
+      opacity: 0.8;
+      transform: translate3d(2vw, 6vh, 0) rotate(calc(var(--r, 0deg) + 14deg)) scale(1);
+    }
+    75% {
+      opacity: 0.7;
+    }
+    100% {
+      opacity: 0;
+      transform: translate3d(-1.5vw, 12vh, 0) rotate(calc(var(--r, 0deg) + 26deg)) scale(1.08);
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .fdb-petal {
+      animation: none;
+      opacity: 0.45;
+    }
+    [data-parallax='img'],
+    [data-parallax='overlay'] {
+      transform: none !important;
+    }
+  }
+</style>
+
+<script>
+  import { scroll } from 'motion';
+
+  let previousCancel: (() => void) | undefined;
+
+  function initParallax() {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    const img = document.querySelector<HTMLElement>('[data-parallax="img"]');
+    const overlay = document.querySelector<HTMLElement>('[data-parallax="overlay"]');
+    const hero = document.querySelector<HTMLElement>('[data-fdb-hero]');
+    if (!img || !hero) return;
+
+    if (previousCancel) previousCancel();
+    const offset = ['start start', 'end start'] as const;
+    const onScroll = (p: number) => {
+      const yImg = p * 60;
+      const yOv = p * 30;
+      img.style.transform = `translate3d(0, ${yImg.toFixed(2)}px, 0)`;
+      if (overlay) overlay.style.transform = `translate3d(0, ${yOv.toFixed(2)}px, 0)`;
+    };
+
+    previousCancel = scroll(onScroll, { target: hero, offset: [...offset] });
+  }
+
+  document.addEventListener('astro:page-load', initParallax);
+</script>
