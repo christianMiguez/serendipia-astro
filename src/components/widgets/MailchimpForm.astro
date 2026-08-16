@@ -10,7 +10,7 @@ export interface Props {
   keepBadge?: boolean;
 }
 
-const { u, id, fId, tags, title, buttonText = 'Quiero que me avisen', description, keepBadge = true } = Astro.props;
+const { u, id, fId, tags, title, buttonText = 'ENVIAR', description, keepBadge = true } = Astro.props;
 
 const action = `https://serendipia.us18.list-manage.com/subscribe/post?u=${u}&id=${id}&f_id=${fId}`;
 const honeypotName = `b_${u}_${id}`;
