@@ -1,0 +1,272 @@
+---
+import { Icon } from 'astro-icon/components';
+import Layout from '~/layouts/PageLayout.astro';
+import Button from '~/components/ui/Button.astro';
+import FAQs from '~/components/widgets/FAQs.astro';
+import CallToAction from '~/components/widgets/CallToAction.astro';
+import MailchimpForm from '~/components/widgets/MailchimpForm.astro';
+import { asesoriaDeImagen as data } from '~/data/asesoria-de-imagen';
+
+export const prerender = true;
+
+const metadata = {
+  title: data.metadata.title,
+  description: data.metadata.description,
+  canonical: data.metadata.canonical,
+  robots: { index: true, follow: true },
+  openGraph: {
+    type: 'article',
+    images: [{ url: data.hero.image, width: 1200, height: 630, alt: data.hero.imageAlt }],
+  },
+};
+
+const reveal =
+  'intersect-once intersect-quarter intersect-no-queue motion-safe:md:opacity-0 motion-safe:md:intersect:animate-fade-up-blur';
+---
+
+<Layout metadata={metadata}>
+  <!-- Hero split: texto + formulario visible ********************** -->
+  <section class="relative overflow-hidden bg-text-heading" aria-labelledby="adi-hero-title">
+    <div class="absolute inset-0" aria-hidden="true">
+      <img
+        src={data.hero.image}
+        alt={data.hero.imageAlt}
+        class="h-full w-full object-cover"
+        loading="eager"
+        fetchpriority="high"
+        decoding="async"
+      />
+      <div class="absolute inset-0 bg-gradient-to-br from-[#5c3a44]/90 via-[#6b4f5a]/80 to-[#4f5a4e]/70"></div>
+      <div class="absolute inset-0 bg-gradient-to-tl from-[#7a9b8f]/30 via-transparent to-[#c98b9a]/25"></div>
+    </div>
+
+    <div
+      class="relative z-10 mx-auto grid max-w-6xl grid-cols-1 items-center gap-10 px-6 py-14 md:py-20 lg:grid-cols-2 lg:gap-16"
+    >
+      <!-- Texto -->
+      <div class="text-white">
+        <span
+          class="mb-4 inline-flex items-center gap-2 rounded-full border border-white/30 bg-white/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.2em] text-white backdrop-blur-md"
+        >
+          <Icon name="tabler:sparkles" class="h-4 w-4" />
+          {data.hero.tagline}
+        </span>
+        <h1
+          id="adi-hero-title"
+          class="text-balance font-heading text-4xl font-bold leading-[1.05] tracking-tight drop-shadow-[0_2px_20px_rgba(0,0,0,0.3)] sm:text-5xl"
+        >
+          {data.hero.title}
+        </h1>
+        <p
+          class="mt-4 text-lg font-medium text-white/95 drop-shadow-[0_1px_10px_rgba(0,0,0,0.25)]"
+          set:html={data.hero.hook}
+        />
+        <p class="mt-3 max-w-xl text-base text-white/80" set:html={data.hero.subtitle} />
+
+        <ul class="mt-7 grid grid-cols-1 gap-3 sm:grid-cols-3">
+          {
+            data.evento.map((item) => (
+              <li class="flex items-center gap-2.5 rounded-xl border border-white/15 bg-white/10 px-3 py-2.5 backdrop-blur-sm">
+                <Icon name={item.icon} class="h-5 w-5 flex-none text-white/90" />
+                <span class="flex flex-col leading-tight">
+                  <span class="text-[0.65rem] font-semibold uppercase tracking-wide text-white/60">{item.title}</span>
+                  <span class="text-sm font-semibold text-white">{item.value}</span>
+                </span>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+
+      <!-- Formulario -->
+      <div id="inscripcion" class="scroll-mt-24 lg:scroll-mt-4">
+        <MailchimpForm
+          u={data.mailchimp.u}
+          id={data.mailchimp.id}
+          fId={data.mailchimp.fId}
+          tags={data.mailchimp.tags}
+          title={data.mailchimp.title}
+          buttonText={data.mailchimp.buttonText}
+          description={data.mailchimp.description}
+          keepBadge={false}
+        />
+      </div>
+    </div>
+  </section>
+
+  <!-- Qué vas a descubrir ****************************************** -->
+  <section class="px-6 py-16 sm:py-20">
+    <div class="mx-auto max-w-6xl">
+      <div class={`mx-auto max-w-2xl text-center ${reveal}`}>
+        <h2 class="text-3xl font-bold font-heading text-text-heading sm:text-4xl">{data.descubrir.title}</h2>
+        <p class="mt-3 text-muted">
+          Una tarde para descubrir, probar, elegir y sorprenderte con todo lo que un accesorio te puede transformar.
+        </p>
+      </div>
+      <ul class="mt-10 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+        {
+          data.descubrir.items.map((item) => (
+            <li
+              class:list={[
+                'flex flex-col gap-3 rounded-2xl border border-border bg-surface p-5 shadow-sm transition duration-200 hover:shadow-md',
+                reveal,
+              ]}
+            >
+              <span class="flex h-11 w-11 items-center justify-center rounded-full bg-salmon-soft text-primary-strong">
+                <Icon name={item.icon} class="h-5 w-5" />
+              </span>
+              <h3 class="font-semibold text-text-heading">{item.title}</h3>
+              <p class="text-sm text-muted">{item.description}</p>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+
+  <!-- Quién lo dicta (mini-bloque) ********************************* -->
+  <section class="bg-cream px-6 py-14 sm:py-16">
+    <div
+      class={`mx-auto flex max-w-4xl flex-col items-center gap-6 text-center sm:flex-row sm:gap-8 sm:text-left ${reveal}`}
+    >
+      <img
+        src={data.tallerera.foto}
+        alt={data.tallerera.fotoAlt}
+        class="h-20 w-20 flex-none rounded-full object-cover ring-2 ring-primary/20 sm:h-24 sm:w-24"
+        loading="lazy"
+        decoding="async"
+      />
+      <div>
+        <h2 class="text-2xl font-bold font-heading text-text-heading">{data.tallerera.name}</h2>
+        <p class="mt-1 font-medium text-primary-strong">{data.tallerera.rol}</p>
+        <p class="mt-2 text-muted" set:html={data.tallerera.bio} />
+        <a
+          href={data.tallerera.instagram}
+          target="_blank"
+          rel="noopener"
+          class="mt-3 inline-flex items-center gap-1.5 font-medium text-primary-strong hover:underline"
+        >
+          <Icon name="tabler:brand-instagram" class="h-4 w-4" />
+          {data.tallerera.handle}
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- El ciclo de 3 talleres *************************************** -->
+  <section class="px-6 py-16 sm:py-20">
+    <div class="mx-auto max-w-5xl">
+      <div class={`mx-auto max-w-2xl text-center ${reveal}`}>
+        <h2 class="text-3xl font-bold font-heading text-text-heading sm:text-4xl">{data.ciclo.title}</h2>
+        <p class="mt-3 text-muted">Un recorrido completo por tu imagen personal, de la mano de Ale Lozano.</p>
+      </div>
+      <ul class="mt-10 grid grid-cols-1 gap-4 sm:grid-cols-3">
+        {
+          data.ciclo.items.map((item) => (
+            <li
+              class:list={[
+                'flex flex-col gap-2 rounded-2xl border p-5 shadow-sm transition duration-200',
+                item.available
+                  ? 'border-primary/30 bg-primary/5 hover:shadow-md'
+                  : 'border-border bg-surface opacity-80',
+                reveal,
+              ]}
+            >
+              <span
+                class:list={[
+                  'flex h-11 w-11 items-center justify-center rounded-full',
+                  item.available ? 'bg-salmon-soft text-primary-strong' : 'bg-cream text-muted',
+                ]}
+              >
+                <Icon name={item.icon} class="h-5 w-5" />
+              </span>
+              <h3 class="font-semibold text-text-heading">{item.title}</h3>
+              <span
+                class:list={[
+                  'inline-flex w-fit items-center rounded-full px-2.5 py-0.5 text-xs font-semibold',
+                  item.available ? 'bg-primary text-white' : 'bg-cream text-muted',
+                ]}
+              >
+                {item.status}
+              </span>
+              {item.available && (
+                <a
+                  href="#inscripcion"
+                  class="mt-1 inline-flex items-center gap-1 text-sm font-semibold text-primary-strong hover:underline"
+                >
+                  Inscribirme <Icon name="tabler:arrow-right" class="h-4 w-4" />
+                </a>
+              )}
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+
+  <!-- FAQs ********************************************************** -->
+  <FAQs title={data.faqs.title} columns={2} items={data.faqs.items} />
+
+  <!-- CTA final **************************************************** -->
+  <CallToAction
+    title="¿Te sumás el 12 de septiembre?"
+    subtitle="Cupos limitados. Completá el formulario y te escribimos para confirmar tu lugar en el taller."
+    actions={[
+      { text: 'QUIERO ASISTIR', variant: 'primary', href: '#inscripcion', icon: 'tabler:arrow-right' },
+      { text: 'Consultar por WhatsApp', variant: 'tertiary', href: data.whatsappHref, target: '_blank' },
+    ]}
+  />
+</Layout>
+
+<!-- Barra CTA sticky (solo mobile) ********************************* -->
+<div
+  class="adi-sticky fixed inset-x-0 bottom-0 z-40 flex items-center gap-2 border-t border-border bg-surface/95 p-3 backdrop-blur-md shadow-[0_-4px_20px_rgba(0,0,0,0.08)] lg:hidden"
+  data-adi-sticky
+>
+  <a
+    href={data.whatsappHref}
+    target="_blank"
+    rel="noopener"
+    class="flex h-11 w-11 flex-none items-center justify-center rounded-full bg-cream text-primary-strong"
+    aria-label="Consultar por WhatsApp"
+  >
+    <Icon name="tabler:brand-whatsapp" class="h-5 w-5" />
+  </a>
+  <Button
+    variant="primary"
+    href="#inscripcion"
+    text="QUIERO ASISTIR"
+    icon="tabler:arrow-right"
+    class="adi-sticky-cta"
+  />
+</div>
+
+<style is:inline>
+  body:has(.adi-sticky) {
+    padding-bottom: 4.5rem;
+  }
+  @media (min-width: 1024px) {
+    body:has(.adi-sticky) {
+      padding-bottom: 0;
+    }
+  }
+</style>
+
+<script>
+  function smoothScrollToForm() {
+    const target = document.getElementById('inscripcion');
+    if (!target) return;
+    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+
+  document.addEventListener('click', (e) => {
+    const link = (e.target as HTMLElement)?.closest('a[href="#inscripcion"]');
+    if (!link) return;
+    e.preventDefault();
+    smoothScrollToForm();
+  });
+
+  document.addEventListener('astro:page-load', () => {
+    if (window.location.hash === '#inscripcion') smoothScrollToForm();
+  });
+</script>
