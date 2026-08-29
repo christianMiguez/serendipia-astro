@@ -25,7 +25,7 @@ const reveal =
 ---
 
 <Layout metadata={metadata}>
-  <!-- Hero split: texto + formulario visible ********************** -->
+  <!-- Hero: texto + CTA WhatsApp *********************************** -->
   <section class="relative overflow-hidden bg-text-heading" aria-labelledby="adi-hero-title">
     <div class="absolute inset-0" aria-hidden="true">
       <img
@@ -76,21 +76,28 @@ const reveal =
             ))
           }
         </ul>
+
+        <div class="mt-8">
+          <Button
+            variant="primary"
+            href={data.whatsappHref}
+            target="_blank"
+            text="ME INTERESA"
+            icon="tabler:brand-whatsapp"
+          />
+        </div>
       </div>
 
-      <!-- Formulario -->
-      <div id="inscripcion" class="scroll-mt-24 lg:scroll-mt-4">
-        <MailchimpForm
-          u={data.mailchimp.u}
-          id={data.mailchimp.id}
-          fId={data.mailchimp.fId}
-          tags={data.mailchimp.tags}
-          title={data.mailchimp.title}
-          buttonText={data.mailchimp.buttonText}
-          description={data.mailchimp.description}
-          keepBadge={false}
+      <!-- Imagen -->
+      <figure class="overflow-hidden rounded-2xl border border-white/15 shadow-2xl backdrop-blur-sm">
+        <img
+          src="/imagen2.webp"
+          alt="Taller de Asesoría de Imagen en Espacio Serendipia"
+          class="aspect-[4/5] w-full object-cover"
+          loading="eager"
+          decoding="async"
         />
-      </div>
+      </figure>
     </div>
   </section>
 
@@ -200,7 +207,9 @@ const reveal =
               </span>
               {item.available && (
                 <a
-                  href="#inscripcion"
+                  href={data.whatsappHref}
+                  target="_blank"
+                  rel="noopener"
                   class="mt-1 inline-flex items-center gap-1 text-sm font-semibold text-primary-strong hover:underline"
                 >
                   Inscribirme <Icon name="tabler:arrow-right" class="h-4 w-4" />
@@ -216,13 +225,33 @@ const reveal =
   <!-- FAQs ********************************************************** -->
   <FAQs title={data.faqs.title} columns={2} items={data.faqs.items} />
 
+  <!-- Inscripción (formulario Mailchimp) *************************** -->
+  <section id="inscripcion" class="scroll-mt-24 px-6 py-16 sm:py-20">
+    <div class="mx-auto max-w-md">
+      <MailchimpForm
+        u={data.mailchimp.u}
+        id={data.mailchimp.id}
+        fId={data.mailchimp.fId}
+        tags={data.mailchimp.tags}
+        title={data.mailchimp.title}
+        buttonText={data.mailchimp.buttonText}
+        description={data.mailchimp.description}
+      />
+    </div>
+  </section>
+
   <!-- CTA final **************************************************** -->
   <CallToAction
     title={data.cta.title}
-    subtitle={data.cta.subtitle}
+    subtitle="Escribinos por WhatsApp y te confirmamos tu lugar. Cupos limitados."
     actions={[
-      { text: 'QUIERO ASISTIR', variant: 'primary', href: '#inscripcion', icon: 'tabler:arrow-right' },
-      { text: 'Consultar por WhatsApp', variant: 'tertiary', href: data.whatsappHref, target: '_blank' },
+      {
+        text: 'QUIERO ASISTIR',
+        variant: 'primary',
+        href: data.whatsappHref,
+        target: '_blank',
+        icon: 'tabler:brand-whatsapp',
+      },
     ]}
   />
 </Layout>
@@ -243,9 +272,10 @@ const reveal =
   </a>
   <Button
     variant="primary"
-    href="#inscripcion"
+    href={data.whatsappHref}
+    target="_blank"
     text="QUIERO ASISTIR"
-    icon="tabler:arrow-right"
+    icon="tabler:brand-whatsapp"
     class="adi-sticky-cta"
   />
 </div>
@@ -260,22 +290,3 @@ const reveal =
     }
   }
 </style>
-
-<script>
-  function smoothScrollToForm() {
-    const target = document.getElementById('inscripcion');
-    if (!target) return;
-    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-  }
-
-  document.addEventListener('click', (e) => {
-    const link = (e.target as HTMLElement)?.closest('a[href="#inscripcion"]');
-    if (!link) return;
-    e.preventDefault();
-    smoothScrollToForm();
-  });
-
-  document.addEventListener('astro:page-load', () => {
-    if (window.location.hash === '#inscripcion') smoothScrollToForm();
-  });
-</script>
