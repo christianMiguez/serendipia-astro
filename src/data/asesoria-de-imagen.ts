@@ -1,6 +1,11 @@
 export const asesoriaDeImagen = {
   href: '/asesoria-de-imagen',
 
+  precio: {
+    valor: '$800',
+    unidad: 'por taller',
+  },
+
   whatsappHref:
     'https://wa.me/59899419419?text=Hola%2C+quisiera+m%C3%A1s+info+del+Taller+Forma+de+Rostro+%26+Accesorios+en+Espacio+Serendipia.%C2%BFMe+podr%C3%ADan+brindar+m%C3%A1s+informaci%C3%B3n%3F&utm_source=serendipia.uy',
 
@@ -35,10 +40,10 @@ export const asesoriaDeImagen = {
   },
 
   evento: [
-      { title: 'Fecha', value: '12 de septiembre', icon: 'tabler:calendar-event' },
-      { title: 'Horario', value: '16:00 hs', icon: 'tabler:clock' },
-      { title: 'Lugar', value: 'Barcelona 1881, Montevideo', icon: 'tabler:map-pin' },
-    ],
+    { title: 'Fecha', value: '12 de septiembre', icon: 'tabler:calendar-event' },
+    { title: 'Horario', value: '16:00 hs', icon: 'tabler:clock' },
+    { title: 'Lugar', value: 'Barcelona 1881, Montevideo', icon: 'tabler:map-pin' },
+  ],
 
   descubrir: {
     title: 'Qué vas a descubrir',
@@ -76,6 +81,12 @@ export const asesoriaDeImagen = {
       { title: 'Colorimetría', status: 'Próximamente', available: false, icon: 'tabler:palette' },
       { title: 'Fondo de Armario', status: 'Próximamente', available: false, icon: 'tabler:shirt' },
     ],
+  },
+
+  cta: {
+    title: '¿Te sumás el 12 de septiembre?',
+    subtitle:
+      'Inversión: $800 por taller. Cupos limitados. Completá el formulario y te escribimos para confirmar tu lugar.',
   },
 
   faqs: {

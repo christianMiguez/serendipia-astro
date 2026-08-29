@@ -80,6 +80,12 @@ const reveal =
 
       <!-- Formulario -->
       <div id="inscripcion" class="scroll-mt-24 lg:scroll-mt-4">
+        <div class="mb-3 flex items-center justify-center gap-2 rounded-lg bg-primary/10 px-4 py-2.5">
+          <Icon name="tabler:ticket" class="h-5 w-5 text-primary-strong" />
+          <span class="text-sm font-medium text-muted">Inversión</span>
+          <span class="text-2xl font-bold font-heading text-primary-strong">{data.precio.valor}</span>
+          <span class="text-xs text-muted">· {data.precio.unidad}</span>
+        </div>
         <MailchimpForm
           u={data.mailchimp.u}
           id={data.mailchimp.id}
@@ -189,6 +195,15 @@ const reveal =
               >
                 {item.status}
               </span>
+              <span
+                class:list={[
+                  'inline-flex w-fit items-baseline gap-1 font-heading font-bold',
+                  item.available ? 'text-primary-strong' : 'text-muted',
+                ]}
+              >
+                <span class="text-lg">{data.precio.valor}</span>
+                <span class="text-xs font-medium opacity-70">/ {data.precio.unidad}</span>
+              </span>
               {item.available && (
                 <a
                   href="#inscripcion"
@@ -209,8 +224,8 @@ const reveal =
 
   <!-- CTA final **************************************************** -->
   <CallToAction
-    title="¿Te sumás el 12 de septiembre?"
-    subtitle="Cupos limitados. Completá el formulario y te escribimos para confirmar tu lugar en el taller."
+    title={data.cta.title}
+    subtitle={data.cta.subtitle}
     actions={[
       { text: 'QUIERO ASISTIR', variant: 'primary', href: '#inscripcion', icon: 'tabler:arrow-right' },
       { text: 'Consultar por WhatsApp', variant: 'tertiary', href: data.whatsappHref, target: '_blank' },
